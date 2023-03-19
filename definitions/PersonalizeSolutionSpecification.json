@@ -1,0 +1,272 @@
+{
+  "PropertyTypes": {
+    "AWS::Personalize::Solution.AutoMLConfig": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-automlconfig.html",
+      "Properties": {
+        "MetricName": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-automlconfig.html#cfn-personalize-solution-automlconfig-metricname",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "RecipeList": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-automlconfig.html#cfn-personalize-solution-automlconfig-recipelist",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "PrimitiveItemType": "String",
+          "DuplicatesAllowed": true
+        }
+      }
+    },
+    "AWS::Personalize::Solution.HpoResourceConfig": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hporesourceconfig.html",
+      "Properties": {
+        "MaxParallelTrainingJobs": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hporesourceconfig.html#cfn-personalize-solution-hporesourceconfig-maxparalleltrainingjobs",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "MaxNumberOfTrainingJobs": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hporesourceconfig.html#cfn-personalize-solution-hporesourceconfig-maxnumberoftrainingjobs",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        }
+      }
+    },
+    "AWS::Personalize::Solution.AlgorithmHyperParameterRanges": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-algorithmhyperparameterranges.html",
+      "Properties": {
+        "IntegerHyperParameterRanges": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-algorithmhyperparameterranges.html#cfn-personalize-solution-algorithmhyperparameterranges-integerhyperparameterranges",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "ItemType": "IntegerHyperParameterRange",
+          "DuplicatesAllowed": true
+        },
+        "CategoricalHyperParameterRanges": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-algorithmhyperparameterranges.html#cfn-personalize-solution-algorithmhyperparameterranges-categoricalhyperparameterranges",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "ItemType": "CategoricalHyperParameterRange",
+          "DuplicatesAllowed": true
+        },
+        "ContinuousHyperParameterRanges": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-algorithmhyperparameterranges.html#cfn-personalize-solution-algorithmhyperparameterranges-continuoushyperparameterranges",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "ItemType": "ContinuousHyperParameterRange",
+          "DuplicatesAllowed": true
+        }
+      }
+    },
+    "AWS::Personalize::Solution.SolutionConfig": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-solutionconfig.html",
+      "Properties": {
+        "EventValueThreshold": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-solutionconfig.html#cfn-personalize-solution-solutionconfig-eventvaluethreshold",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "HpoConfig": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-solutionconfig.html#cfn-personalize-solution-solutionconfig-hpoconfig",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "HpoConfig"
+        },
+        "AlgorithmHyperParameters": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-solutionconfig.html#cfn-personalize-solution-solutionconfig-algorithmhyperparameters",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "Map",
+          "PrimitiveItemType": "String"
+        },
+        "FeatureTransformationParameters": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-solutionconfig.html#cfn-personalize-solution-solutionconfig-featuretransformationparameters",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "Map",
+          "PrimitiveItemType": "String"
+        },
+        "AutoMLConfig": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-solutionconfig.html#cfn-personalize-solution-solutionconfig-automlconfig",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "AutoMLConfig"
+        }
+      }
+    },
+    "AWS::Personalize::Solution.ContinuousHyperParameterRange": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-continuoushyperparameterrange.html",
+      "Properties": {
+        "MinValue": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-continuoushyperparameterrange.html#cfn-personalize-solution-continuoushyperparameterrange-minvalue",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Double"
+        },
+        "MaxValue": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-continuoushyperparameterrange.html#cfn-personalize-solution-continuoushyperparameterrange-maxvalue",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Double"
+        },
+        "Name": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-continuoushyperparameterrange.html#cfn-personalize-solution-continuoushyperparameterrange-name",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        }
+      }
+    },
+    "AWS::Personalize::Solution.HpoObjective": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoobjective.html",
+      "Properties": {
+        "MetricName": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoobjective.html#cfn-personalize-solution-hpoobjective-metricname",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "Type": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoobjective.html#cfn-personalize-solution-hpoobjective-type",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "MetricRegex": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoobjective.html#cfn-personalize-solution-hpoobjective-metricregex",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        }
+      }
+    },
+    "AWS::Personalize::Solution.HpoConfig": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoconfig.html",
+      "Properties": {
+        "HpoResourceConfig": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoconfig.html#cfn-personalize-solution-hpoconfig-hporesourceconfig",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "HpoResourceConfig"
+        },
+        "AlgorithmHyperParameterRanges": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoconfig.html#cfn-personalize-solution-hpoconfig-algorithmhyperparameterranges",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "AlgorithmHyperParameterRanges"
+        },
+        "HpoObjective": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-hpoconfig.html#cfn-personalize-solution-hpoconfig-hpoobjective",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "HpoObjective"
+        }
+      }
+    },
+    "AWS::Personalize::Solution.IntegerHyperParameterRange": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-integerhyperparameterrange.html",
+      "Properties": {
+        "MinValue": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-integerhyperparameterrange.html#cfn-personalize-solution-integerhyperparameterrange-minvalue",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Integer"
+        },
+        "MaxValue": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-integerhyperparameterrange.html#cfn-personalize-solution-integerhyperparameterrange-maxvalue",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Integer"
+        },
+        "Name": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-integerhyperparameterrange.html#cfn-personalize-solution-integerhyperparameterrange-name",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        }
+      }
+    },
+    "AWS::Personalize::Solution.CategoricalHyperParameterRange": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-categoricalhyperparameterrange.html",
+      "Properties": {
+        "Values": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-categoricalhyperparameterrange.html#cfn-personalize-solution-categoricalhyperparameterrange-values",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "PrimitiveItemType": "String",
+          "DuplicatesAllowed": true
+        },
+        "Name": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-personalize-solution-categoricalhyperparameterrange.html#cfn-personalize-solution-categoricalhyperparameterrange-name",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        }
+      }
+    }
+  },
+  "ResourceType": {
+    "AWS::Personalize::Solution": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html",
+      "Properties": {
+        "PerformAutoML": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html#cfn-personalize-solution-performautoml",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Boolean"
+        },
+        "PerformHPO": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html#cfn-personalize-solution-performhpo",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Boolean"
+        },
+        "EventType": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html#cfn-personalize-solution-eventtype",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "DatasetGroupArn": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html#cfn-personalize-solution-datasetgrouparn",
+          "UpdateType": "Immutable",
+          "Required": true,
+          "PrimitiveType": "String"
+        },
+        "SolutionConfig": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html#cfn-personalize-solution-solutionconfig",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "SolutionConfig"
+        },
+        "RecipeArn": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html#cfn-personalize-solution-recipearn",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "Name": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-personalize-solution.html#cfn-personalize-solution-name",
+          "UpdateType": "Immutable",
+          "Required": true,
+          "PrimitiveType": "String"
+        }
+      },
+      "Attributes": {
+        "SolutionArn": {
+          "PrimitiveType": "String"
+        }
+      }
+    }
+  },
+  "ResourceSpecificationVersion": "116.0.0"
+}

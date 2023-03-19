@@ -1,0 +1,39 @@
+{
+  "ResourceType": {
+    "AWS::Kinesis::StreamConsumer": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-kinesis-streamconsumer.html",
+      "Attributes": {
+        "ConsumerCreationTimestamp": {
+          "PrimitiveType": "String"
+        },
+        "ConsumerName": {
+          "PrimitiveType": "String"
+        },
+        "ConsumerARN": {
+          "PrimitiveType": "String"
+        },
+        "ConsumerStatus": {
+          "PrimitiveType": "String"
+        },
+        "StreamARN": {
+          "PrimitiveType": "String"
+        }
+      },
+      "Properties": {
+        "ConsumerName": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-kinesis-streamconsumer.html#cfn-kinesis-streamconsumer-consumername",
+          "PrimitiveType": "String",
+          "UpdateType": "Immutable"
+        },
+        "StreamARN": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-kinesis-streamconsumer.html#cfn-kinesis-streamconsumer-streamarn",
+          "PrimitiveType": "String",
+          "UpdateType": "Immutable"
+        }
+      }
+    }
+  },
+  "ResourceSpecificationVersion": "116.0.0"
+}
