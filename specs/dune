@@ -1,0 +1,28 @@
+(executable
+ (name write_specs)
+ (public_name write_specs)
+ (modules write_specs)
+ (libraries generate parse containers fmt))
+
+(env
+ (dev
+  (flags
+   (:standard
+    -warn-error -26
+    -w -30
+    ;-w -50 ; documentation ambiguous
+    -w -33 ; unused open
+    ))))
+
+(rule
+  (alias resources)
+  (targets Cf_aws.ml Cf_alexa.ml)
+  (deps
+    (sandbox always)
+   (:jsonfiles (glob_files "../definitions/*.json")))
+  (action
+   (run ./write_specs.exe %{jsonfiles})))
+
+(library  (name cf_aws)  (modules Cf_aws) (libraries cfbase))
+(library  (name cf_alexa) (modules Cf_alexa) (libraries cfbase))
+
