@@ -107,10 +107,12 @@ let sort_by_deps _ prop_specs =
   !sorted_deps |> List.rev |> List.map (fun (name, spec, _) -> (name, spec))
 
 let write_property_definition o name (prop_type : property_definition) =
-  Fmt.pf o "(* see %s *)@,%s:@,%s%s;@," prop_type.documentation
+  Fmt.pf o "(* see %s *)@;%s:@,%s%s@ [@key \"%s\"]%s;@;" prop_type.documentation
     (name |> to_snake_case |> to_safe_name)
     (format_property_type prop_type.property_type)
-    (if prop_type.required then "" else " option");
+    (if prop_type.required then "" else " option")
+    name
+    (if not prop_type.required then "[@default None][@yojson_drop_default (=)]" else "");
   Format.pp_force_newline o ()
 
 let write_property_specification o name (prop_spec : property_specification)
@@ -122,7 +124,10 @@ let write_property_specification o name (prop_spec : property_specification)
     prop_spec.properties
     |> List.iter (fun (name, prop_type) ->
            write_property_definition o name prop_type);
-    Fmt.pf o "@]@,}@,@\n")
+    Fmt.pf o "@]}@,";
+    Fmt.pf o "[@@@@ deriving yojson_of]";
+    Fmt.pf o "@\n"
+    )
   else
     Fmt.pf o "@,(**@;see@;%s;*)@,%s %s = unit@\n" prop_spec.documentation
       (if first then "type" else "and")
@@ -142,8 +147,8 @@ let write_property_constructor o name (type_ : property_specification) =
       |> List.map (fun (name, _) -> name |> to_snake_case |> to_safe_name)
     in
     let property_name = name |> to_snake_case |> to_safe_name in
-    Fmt.pf o "@;let make_%s %a () : %s = {@[<2>@;%a@;@]}@;" property_name
-      (Fmt.list ~sep:Fmt.sp Fmt.string)
+    Fmt.pf o "@\nlet make_%s %a () : %s = {@[<2>@;%a@;@]}@;" property_name
+      (Fmt.list ~sep:(Fmt.sps 2) Fmt.string)
       args property_name
       (Fmt.list ~sep:Fmt.semi Fmt.string)
       record
@@ -154,7 +159,9 @@ let write_resource_specification o _ (type_ : resource_specification) =
     type_.properties
     |> List.iter (fun (name, prop_type) ->
            write_property_definition o name prop_type);
-    Fmt.pf o "@]@,}@,@\n")
+    Fmt.pf o "@]@,}@,";
+    Fmt.pf o "[@@@@deriving yojson_of]"
+  )
   else Fmt.pf o "@,(** see %s *)@,type t = unit@;" type_.documentation
 
 let write_resource_constructor o _ (type_ : resource_specification) =
@@ -169,11 +176,11 @@ let write_resource_constructor o _ (type_ : resource_specification) =
       type_.properties
       |> List.map (fun (name, _) -> name |> to_snake_case |> to_safe_name)
     in
-    Fmt.pf o "@;let make %a () = {@[<2>@;%a@;@]}@;"
-      (Fmt.list ~sep:Fmt.sp Fmt.string)
-      args
-      (Fmt.list ~sep:Fmt.semi Fmt.string)
-      record
+    Fmt.pf o "@,let make@;@[";
+    List.iter (fun arg -> Fmt.pf o "%s@;" arg) args;
+    Fmt.pf o "@]()@ =@ {@[@;";
+    List.iter (fun record -> Fmt.pf o "%s;@;" record) record;
+    Fmt.pf o "@]}@;@\n"
 
 let write_resource_interface o name (type_ : resource_specification)
     (property_types : property_specifications) =
@@ -184,6 +191,7 @@ let write_resource_interface o name (type_ : resource_specification)
   |> List.iteri (fun i (name, prop_spec) ->
          write_property_specification o name prop_spec (i = 0));
   write_resource_specification o name type_;
+  Fmt.pf o "@\n";
   write_resource_constructor o name type_;
   sorted_property_types
   |> List.iter (fun (name, spec) -> write_property_constructor o name spec);

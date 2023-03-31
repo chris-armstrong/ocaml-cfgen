@@ -56,15 +56,23 @@ let write_resources_by_keyed_namespace =
       let oc = Out_channel.open_text filename in
       let f = Format.formatter_of_out_channel oc in
 
-      Fmt.pf f "open Cfbase@\n";
       services_map |> Hashtbl.to_list |> List.take 200
       |> List.iter (fun (service, (resource_tuples: resource_tuple list)) ->
-             Fmt.pf f "module@;%s@;=@;struct@;@[<2>@;" service;
+        Fmt.pf f "module %s = %s@\n" service service;
+        let service_filename = Fmt.str "%s.ml" service in
+        let soc = Out_channel.open_text service_filename in
+        let sf = Format.formatter_of_out_channel soc in
+        Fmt.pf sf "open Cfbase@\n";
+        Fmt.pf sf "open Ppx_yojson_conv_lib.Yojson_conv.Primitives@\n";
+             (* Fmt.pf sf "module@;%s@;=@;struct@;@[<2>@;" service; *)
              resource_tuples
              |> List.iter (fun (resource, type_, prop_types) ->
-                    write_resource f namespace service resource type_ prop_types);
-             Fmt.pf f "@]end@,@\n";
-             Format.pp_print_newline f ());
+                    write_resource sf namespace service resource type_ prop_types);
+             (* Fmt.pf sf "@]end@,@\n"; *)
+             (* Format.pp_print_newline sf (); *)
+             Format.pp_print_flush sf ();
+             Out_channel.close soc
+             );
       Format.pp_print_flush f ();
       Out_channel.close oc)
 
