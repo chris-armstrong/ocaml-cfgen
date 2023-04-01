@@ -1,46 +1,5 @@
 open Parse.Types
-
-let rec mkdirp ?(base = Sys.getcwd ()) segments =
-  match segments with
-  | [] -> ()
-  | segment :: segments ->
-      let path = Filename.concat base segment in
-      (match Sys.file_exists path with
-      | true -> ()
-      | false -> Sys.mkdir path 0o755);
-      mkdirp ~base:path segments
-
-(* let generate_properties property_types =
-   property_types |> List.map (fun (name, pt) -> "") |> String.concat "" *)
-
-let to_snake_case x =
-  let parts = ref [] in
-  let si = ref 0 in
-  let i = ref 1 in
-  let len = String.length x in
-  while !i < len do
-    let c = String.get x !i in
-    (match c with
-    | 'A' .. 'Z' ->
-        parts := String.sub x !si (!i - !si) :: !parts;
-        si := !i
-    | _ -> ());
-    i := !i + 1
-  done;
-  parts := String.sub x !si (len - !si) :: !parts;
-  !parts |> List.rev
-  |> List.map Containers.String.lowercase_ascii
-  |> String.concat "_"
-
-let to_safe_name str =
-  match str with
-  | "type" | "function" | "match" | "or" | "string" | "long" | "int" | "list"
-  | "if" | "else" | "and" | "module" | "then" | "method" | "class" | "object"
-  | "include" | "open" | "end" | "struct" | "to" | "begin" | "mutable" ->
-      str ^ "_"
-  | _ -> str
-
-let to_type_name name = to_snake_case name |> to_safe_name
+open Symbol_utils
 
 let format_primitive_type = function
   | String -> "string"
@@ -112,7 +71,8 @@ let write_property_definition o name (prop_type : property_definition) =
     (format_property_type prop_type.property_type)
     (if prop_type.required then "" else " option")
     name
-    (if not prop_type.required then "[@default None][@yojson_drop_default (=)]" else "");
+    (if not prop_type.required then "[@default None][@yojson_drop_default (=)]"
+     else "");
   Format.pp_force_newline o ()
 
 let write_property_specification o name (prop_spec : property_specification)
@@ -125,14 +85,94 @@ let write_property_specification o name (prop_spec : property_specification)
     |> List.iter (fun (name, prop_type) ->
            write_property_definition o name prop_type);
     Fmt.pf o "@]}@,";
-    Fmt.pf o "[@@@@ deriving yojson_of]";
-    Fmt.pf o "@\n"
-    )
+    (* Fmt.pf o "[@@@@ deriving yojson_of]"; *)
+    Fmt.pf o "@\n")
   else
     Fmt.pf o "@,(**@;see@;%s;*)@,%s %s = unit@\n" prop_spec.documentation
       (if first then "type" else "and")
       (to_type_name name);
   Format.pp_force_newline o ()
+
+[@@@warning "-27"]
+
+let to_property_name x = x |> to_snake_case |> to_safe_name
+
+let primitive_to_yojson primitive =
+  match primitive with
+  | String -> "`String"
+  | Integer | Long -> "`Int"
+  | Double -> "`Float"
+  | Boolean -> "`Bool"
+  | Timestamp -> "`String"
+  | Json -> "`String"
+
+let primitive_to_yojson_func primitive =
+  match primitive with
+  | String | Timestamp | Json -> "yojson_of_string"
+  | Integer | Long -> "yojson_of_int"
+  | Double -> "yojson_of_float"
+  | Boolean -> "yojson_of_bool"
+
+let property_to_yojson_func = function
+  | PropertyPrimitive x -> primitive_to_yojson_func x
+  | PropertyRecord x -> Fmt.str "yojson_of_%s" (x |> to_type_name)
+  | PropertyList (ComplexPrimitive x) ->
+      Fmt.str "(yojson_of_list %s)" (primitive_to_yojson_func x)
+  | PropertyList (ComplexRecord x) ->
+      Fmt.str "(yojson_of_list yojson_of_%s)" (x |> to_type_name)
+  | PropertyMap (ComplexPrimitive x) ->
+      Fmt.str "(StringMap.yojson_of_t %s)" (primitive_to_yojson_func x)
+  | PropertyMap (ComplexRecord x) ->
+      Fmt.str "(StringMap.yojson_of_t yojson_of_%s)" (x |> to_type_name)
+
+let write_property_to_yojson o symbol { property_type; _ } =
+  match property_type with
+  | PropertyPrimitive primitive ->
+      Fmt.pf o "%s %s" (primitive_to_yojson primitive) symbol
+  | PropertyList (ComplexPrimitive x) ->
+      Fmt.pf o "`List (List.map %s %s)" (primitive_to_yojson_func x) symbol
+  | PropertyMap (ComplexPrimitive x) ->
+      Fmt.pf o "(StringMap.yojson_of_t %s %s)"
+        (primitive_to_yojson_func x)
+        symbol
+  | PropertyRecord name ->
+      Fmt.pf o "yojson_of_%s %s" (name |> to_type_name) symbol
+  | PropertyList (ComplexRecord x) ->
+      Fmt.pf o "`List (List.map yojson_of_%s %s)" (x |> to_type_name) symbol
+  | PropertyMap (ComplexRecord x) ->
+      Fmt.pf o "(StringMap.yojson_of_t yojson_of_%s %s)" (x |> to_type_name) symbol
+
+let is_prop_type_record_of_name name { property_type ; _} = match property_type with
+    | PropertyRecord x
+    | PropertyList (ComplexRecord x)
+    | PropertyMap (ComplexRecord x)
+-> String.equal x name
+| _ -> false
+
+let write_record_to_yojson o name
+    properties first =
+  let type_name = name |> to_type_name in
+  let record_name = if List.length properties > 0 then "v" else "_" in
+  let rec_ = if first then "let rec" else "and" in
+  Fmt.pf o "%s yojson_of_%s@ (%s@.:@,%s)@ =@,@\n@[<2>@;" rec_ type_name
+    record_name type_name;
+  let required_props, optional_props =
+    properties |> List.partition (fun (_, p) -> p.required)
+  in
+  Fmt.pf o "@;let base =@ [@[<2>@,";
+  required_props
+  |> List.iter (fun (name, p) ->
+         Fmt.pf o "(@ \"%s\"@ ,@ " name;
+         write_property_to_yojson o ("v." ^ to_property_name name) p;
+         Fmt.pf o "@ )@;;@;");
+  Fmt.pf o "@;@]]@ in@\n";
+  optional_props
+  |> List.iter (fun (name, p) ->
+         Fmt.pf o "let base = prepend_option_map base %s"
+           (property_to_yojson_func p.property_type);
+         Fmt.pf o " %s \"%s\" @;in@\n" ("v." ^ to_property_name name) name);
+  Fmt.pf o "(`Assoc base)";
+  Fmt.pf o "@]@;@\n"
 
 let write_property_constructor o name (type_ : property_specification) =
   if List.length type_.properties > 0 then
@@ -159,13 +199,11 @@ let write_resource_specification o _ (type_ : resource_specification) =
     type_.properties
     |> List.iter (fun (name, prop_type) ->
            write_property_definition o name prop_type);
-    Fmt.pf o "@]@,}@,";
-    Fmt.pf o "[@@@@deriving yojson_of]"
-  )
+    Fmt.pf o "@]@,}@," (* Fmt.pf o "[@@@@deriving yojson_of]" *))
   else Fmt.pf o "@,(** see %s *)@,type t = unit@;" type_.documentation
 
 let write_resource_constructor o _ (type_ : resource_specification) =
-  if List.length type_.properties > 0 then
+  if List.length type_.properties > 0 then (
     let args =
       type_.properties
       |> List.map (fun (name, { required; _ }) ->
@@ -180,7 +218,7 @@ let write_resource_constructor o _ (type_ : resource_specification) =
     List.iter (fun arg -> Fmt.pf o "%s@;" arg) args;
     Fmt.pf o "@]()@ =@ {@[@;";
     List.iter (fun record -> Fmt.pf o "%s;@;" record) record;
-    Fmt.pf o "@]}@;@\n"
+    Fmt.pf o "@]}@;@\n")
 
 let write_resource_interface o name (type_ : resource_specification)
     (property_types : property_specifications) =
@@ -195,5 +233,9 @@ let write_resource_interface o name (type_ : resource_specification)
   write_resource_constructor o name type_;
   sorted_property_types
   |> List.iter (fun (name, spec) -> write_property_constructor o name spec);
+  sorted_property_types
+  |> List.iteri (fun i (name, (spec: property_specification)) ->
+         write_record_to_yojson o name spec.properties (i = 0));
+  write_record_to_yojson o "t" type_.properties true;
   Fmt.pf o "@]@,end@,@\n";
   Format.pp_print_newline o ()

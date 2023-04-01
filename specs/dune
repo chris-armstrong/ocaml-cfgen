@@ -15,6 +15,8 @@
     ;-w -50 ; documentation ambiguous
     -w
     -33 ; unused open
+    -w
+    -39 ; unused rec flag
     ))))
 
 (rule
@@ -92,7 +94,7 @@
   LookoutEquipment.ml
   GameLift.ml
   Pinpoint.ml
-  WAFv2.ml
+  WAFv2.ml ; recursive types not handled in from_yojson_to converters
   DataSync.ml
   Glue.ml
   Evidently.ml
@@ -205,7 +207,7 @@
   FSx.ml
   MediaPackage.ml
   ApiGateway.ml
-  AmplifyUIBuilder.ml
+  AmplifyUIBuilder.ml; recursive types not handled in from_yojson_to converters
   BillingConductor.ml
   KMS.ml
   ResourceExplorer2.ml
@@ -220,6 +222,19 @@
   ECS.ml
   IoTCoreDeviceAdvisor.ml
   ElasticBeanstalk.ml
+  SystemsManagerSAP.ml
+  WAFRegional.ml
+  KafkaConnect.ml
+  CodePipeline.ml
+  DLM.ml
+  WAF.ml
+  CodeDeploy.ml
+  Cloud9.ml
+  Neptune.ml
+  Greengrass.ml
+  AmazonMQ.ml
+  CloudTrail.ml
+  ElastiCache.ml
   ; Alexa
   ASK.ml
  )
@@ -434,12 +449,24 @@
   ECS
   IoTCoreDeviceAdvisor
   ElasticBeanstalk
+  SystemsManagerSAP
+  WAFRegional
+  KafkaConnect
+  CodePipeline
+  DLM
+  WAF
+  CodeDeploy
+  Cloud9
+  Neptune
+  Greengrass
+  AmazonMQ
+  CloudTrail
+  ElastiCache
   )
  (libraries cfbase ppx_deriving ppx_yojson_conv)
- (preprocess
-  (pps ppx_yojson_conv)))
+ )
 
 (library
  (name cf_alexa)
  (modules Cf_alexa ASK)
- (libraries cfbase ppx_deriving ppx_yojson_conv) (preprocess (pps ppx_yojson_conv)))
+ (libraries cfbase ppx_deriving ppx_yojson_conv) )

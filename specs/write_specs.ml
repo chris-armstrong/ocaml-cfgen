@@ -1,4 +1,5 @@
 open Parse.Types
+
 let input_files = Array.sub Sys.argv 1 (Array.length Sys.argv - 1)
 
 let load_resource_specs () =
@@ -24,17 +25,16 @@ let write_resource f namespace service resource type_ property_types =
   Fmt.pr "- Generating %s\n" namespace_path;
   Generate.write_resource_interface f resource type_ property_types
 
-
+type resource_tuple = string * resource_specification * property_specifications
 (** A resource tuple, consisting of:
     * the resource name (namespaced or not)
     * resource specification
     * list associated property specifications (record type definitions)
   *)
-type resource_tuple = string * resource_specification * property_specifications
 
 let key_by_namespace =
   List.fold_left
-    (fun namespace_map (namespace, service, (res: resource_tuple)) ->
+    (fun namespace_map (namespace, service, (res : resource_tuple)) ->
       let open Containers in
       let services_map =
         Hashtbl.get_or_add namespace_map ~k:namespace ~f:(fun _ ->
@@ -56,27 +56,27 @@ let write_resources_by_keyed_namespace =
       let oc = Out_channel.open_text filename in
       let f = Format.formatter_of_out_channel oc in
 
-      services_map |> Hashtbl.to_list |> List.take 200
-      |> List.iter (fun (service, (resource_tuples: resource_tuple list)) ->
-        Fmt.pf f "module %s = %s@\n" service service;
-        let service_filename = Fmt.str "%s.ml" service in
-        let soc = Out_channel.open_text service_filename in
-        let sf = Format.formatter_of_out_channel soc in
-        Fmt.pf sf "open Cfbase@\n";
-        Fmt.pf sf "open Ppx_yojson_conv_lib.Yojson_conv.Primitives@\n";
+      services_map |> Hashtbl.to_list
+      |> List.iter (fun (service, (resource_tuples : resource_tuple list)) ->
+             Fmt.pf f "module %s = %s@\n" service service;
+             let service_filename = Fmt.str "%s.ml" service in
+             let soc = Out_channel.open_text service_filename in
+             let sf = Format.formatter_of_out_channel soc in
+             Fmt.pf sf "open Cfbase@\n@\n";
+             (* Fmt.pf sf "open Ppx_yojson_conv_lib.Yojson_conv.Primitives@\n"; *)
              (* Fmt.pf sf "module@;%s@;=@;struct@;@[<2>@;" service; *)
              resource_tuples
              |> List.iter (fun (resource, type_, prop_types) ->
-                    write_resource sf namespace service resource type_ prop_types);
+                    write_resource sf namespace service resource type_
+                      prop_types);
              (* Fmt.pf sf "@]end@,@\n"; *)
              (* Format.pp_print_newline sf (); *)
              Format.pp_print_flush sf ();
-             Out_channel.close soc
-             );
+             Out_channel.close soc);
       Format.pp_print_flush f ();
       Out_channel.close oc)
 
-let write_resource_interfaces (resource_specs: resource_tuple list) =
+let write_resource_interfaces (resource_specs : resource_tuple list) =
   let by_namespace =
     resource_specs
     |> List.map (fun (name, type_, property_types) ->
