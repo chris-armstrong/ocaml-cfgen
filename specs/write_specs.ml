@@ -22,8 +22,9 @@ module StringMap = Containers.Map.Make (String)
 let write_resource f namespace service resource type_ property_types =
   let namespace_dir = [ namespace; service; resource ] in
   let namespace_path = String.concat "." namespace_dir in
+  let fqn = String.concat "::" namespace_dir in
   Fmt.pr "- Generating %s\n" namespace_path;
-  Generate.write_resource_interface f resource type_ property_types
+  Generate.write_resource_interface f fqn resource type_ property_types
 
 type resource_tuple = string * resource_specification * property_specifications
 (** A resource tuple, consisting of:
@@ -62,15 +63,11 @@ let write_resources_by_keyed_namespace =
              let service_filename = Fmt.str "%s.ml" service in
              let soc = Out_channel.open_text service_filename in
              let sf = Format.formatter_of_out_channel soc in
-             Fmt.pf sf "open Cfbase@\n@\n";
-             (* Fmt.pf sf "open Ppx_yojson_conv_lib.Yojson_conv.Primitives@\n"; *)
-             (* Fmt.pf sf "module@;%s@;=@;struct@;@[<2>@;" service; *)
+             Fmt.pf sf "open Cf_base@\n@\n";
              resource_tuples
              |> List.iter (fun (resource, type_, prop_types) ->
                     write_resource sf namespace service resource type_
                       prop_types);
-             (* Fmt.pf sf "@]end@,@\n"; *)
-             (* Format.pp_print_newline sf (); *)
              Format.pp_print_flush sf ();
              Out_channel.close soc);
       Format.pp_print_flush f ();

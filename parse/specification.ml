@@ -46,6 +46,7 @@ type attribute_type =
   | AttributePrimitive of primitive_type
   | AttributeRecord of string
   | AttributeList of complex_type
+  | AttributeMap of complex_type
 [@@deriving show]
 
 type resource_specification = {

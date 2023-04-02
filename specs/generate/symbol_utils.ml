@@ -26,3 +26,9 @@ let to_safe_name str =
   | _ -> str
 
 let to_type_name name = to_snake_case name |> to_safe_name
+
+let to_property_name x = x |> to_snake_case |> to_safe_name
+
+let to_attribute_name x = x |> (Containers.String.replace ~which:`All ~sub:"." ~by:"_") |> to_snake_case |> to_safe_name
+
+let to_attributes_type_name resource_name = (resource_name |> to_type_name) ^ "_attributes"

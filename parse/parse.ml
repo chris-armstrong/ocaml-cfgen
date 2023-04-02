@@ -83,6 +83,7 @@ let read_property_types tree =
 let read_attribute_type tree =
   match tree |> Util.member "Type" |> Util.to_string_option with
     | Some "List" -> AttributeList (read_complex_type tree)
+    | Some "Map" -> AttributeMap (read_complex_type tree)
     | Some x -> AttributeRecord x
     | None -> AttributePrimitive (read_primitive tree)
 
