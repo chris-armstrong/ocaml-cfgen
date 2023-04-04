@@ -5,14 +5,6 @@ module type StackResource = sig
   val yojson_of_properties : unit -> Yojson.Safe.t
 end
 
-module type StackResourceCreator = sig
-  include StackResource
-
-  type attributes
-
-  (* val attributes : attributes *)
-end
-
 type parameter_string_constraints = {
   default_value: string option;
   min_length : int option;
@@ -46,17 +38,24 @@ type t = {
 let make () =
   { resources = ref StringMap.empty; parameters = ref StringMap.empty }
 
-(* type 'attributes logical_resource = { attributes : 'attributes } *)
-type logical_resource = { type_ : string }
+type 'attributes logical_resource = { cloudformation_type : string; attributes: 'attributes }
 
-let add_resource (type a) stack logical_id
-    (resource : (module StackResourceCreator with type attributes = a)) =
-  let module Resource =
-    (val resource : StackResourceCreator with type attributes = a)
-  in
-  let creator_ = (module Resource : StackResource) in
-  stack.resources := StringMap.add logical_id creator_ !(stack.resources);
-  { type_ = Resource.type_ }
+module type ResourceType = sig
+  type properties
+  type attributes
+  val yojson_of_properties: properties -> Yojson.Safe.t
+  val create_attributes: string -> attributes
+  val cloudformation_type : string
+end
+
+let add_resource (type a)(type p) stack logical_id (resource_type: (module ResourceType with type attributes = a and type properties = p)) properties =
+  let module ResourceType = (val resource_type : ResourceType with type attributes = a and type properties = p) in
+  let module Resource = struct
+    let type_ = ResourceType.cloudformation_type
+    let yojson_of_properties () = ResourceType.yojson_of_properties properties
+  end in
+  stack.resources := StringMap.add logical_id (module Resource: StackResource) !(stack.resources);
+  { cloudformation_type = Resource.type_; attributes = ResourceType.create_attributes logical_id }
 
 
 let add_parameter stack name value ?description ?no_echo () =

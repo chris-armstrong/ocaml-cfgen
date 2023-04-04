@@ -10,3 +10,7 @@ end
 include Util
 
 module Stack = Stack
+
+module Token_map = Token_map
+
+module Attributes = Attributes

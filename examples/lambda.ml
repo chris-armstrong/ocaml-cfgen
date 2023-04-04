@@ -1,21 +1,19 @@
 open Cf_aws.Lambda
 open Cf_base
 
-let main () =
-  let stack = Stack.make () in
-  let lambda_props =
-    Function.make_properties
-      ~runtime:"nodejs12.x"
-      ~code:(Function.make_code ~s3_bucket:"bucket" ~s3_key:"my_key/key" ())
-      ~role:"role" () in
+let stack = Stack.make ()
 
-  let _ = Stack.add_resource stack "FunctionX" (Function.create lambda_props) in
-  Stack.add_string_parameter stack "TestParameter"
-    ~description:"This is a test parameter"
-    ~default_value:"Foobar"
-    ();
+let lambda_props =
+  Function.make_properties ~runtime:"nodejs12.x"
+    ~code:(Function.make_code ~s3_bucket:"bucket" ~s3_key:"my_key/key" ())
+    ~role:"role" ()
 
-  let serialised_stack = Stack.serialise stack
-  in serialised_stack;;
+let resource = Stack.add_resource stack "FunctionX" (module Function) lambda_props;;
 
-Fmt.pr "Stack:\n%s" (Yojson.Safe.to_string (main ()))
+Stack.add_string_parameter stack "TestParameter"
+  ~description:"This is a test parameter" ~default_value:"Foobar" ()
+
+let serialised_stack = Stack.serialise stack;;
+
+Fmt.pr "Stack:@\n%s@\n" (Yojson.Safe.to_string serialised_stack);;
+Fmt.pr "Ref:%s@\n" resource.attributes.ref_

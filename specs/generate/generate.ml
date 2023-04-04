@@ -2,14 +2,8 @@ open Parse.Types
 open Symbol_utils
 open Property_specifications
 open Attributes
-let properties_type_name type_ = if (type_.properties  |> Containers.List.exists (fun (name, _) -> String.equal name "Properties"))
-  then
-    "properties_"
-  else
-    "properties"
 
-let write_record_to_yojson o name properties first =
-  let type_name = name |> to_type_name in
+let write_record_to_yojson o type_name properties first =
   let record_name = if List.length properties > 0 then "v" else "_" in
   let rec_ = if first then "let rec" else "and" in
   Fmt.pf o "%s yojson_of_%s@ (%s@,:@,%s)@ =@,@\n@[<2>@;" rec_ type_name
@@ -54,12 +48,12 @@ let write_property_constructor o name (type_ : property_specification) =
 let write_resource_properties_specification o _ (type_ : resource_specification)
     =
   if List.length type_.properties > 0 then (
-    Fmt.pf o "@;(**@;see@;%s;*)@,@[<2>type %s = {@,"  type_.documentation (properties_type_name type_);
+    Fmt.pf o "@;(**@;see@;%s;*)@,@[<2>type properties = {@,"  type_.documentation;
     type_.properties
     |> List.iter (fun (name, prop_type) ->
            write_property_definition o name prop_type);
     Fmt.pf o "@]@,}@," (* Fmt.pf o "[@@@@deriving yojson_of]" *))
-  else Fmt.pf o "@,(** see %s *)@,type %s = unit@;" type_.documentation (properties_type_name type_)
+  else Fmt.pf o "@,(** see %s *)@,type properties = unit@;" type_.documentation
 
 let write_resource_properties_constructor o _ (type_ : resource_specification) =
   if List.length type_.properties > 0 then (
@@ -73,20 +67,23 @@ let write_resource_properties_constructor o _ (type_ : resource_specification) =
       type_.properties
       |> List.map (fun (name, _) -> name |> to_snake_case |> to_safe_name)
     in
-    Fmt.pf o "@,let make_%s@;@[<2>" (properties_type_name type_);
+    Fmt.pf o "@,let make_properties@;@[<2>" ;
     List.iter (fun arg -> Fmt.pf o "%s@;" arg) args;
     Fmt.pf o "@]()@ =@ {@[<2>@;";
     List.iter (fun record -> Fmt.pf o "%s;@;" record) record;
     Fmt.pf o "@]}@;@\n")
 
+exception InvalidAttributeTokenType of string
 let write_resource_constructor o fqn resource_name type_ =
-
-  Fmt.pf o "let create (properties: %s) =@;@[<2>@;" (properties_type_name type_);
+  Fmt.pf o "let create logical_id (properties: properties) =@;@[<2>@;" ;
   Fmt.pf o "let module Resource = struct@;@[<2>@\n";
-  Fmt.pf o "type attributes = %s@;" (resource_name |> to_attributes_type_name);
-  Fmt.pf o "let type_ = \"%s\"@;" fqn;
-  (* Fmt.pf o "let attributes = \"%s\"" fqn; *)
-  Fmt.pf o "let yojson_of_properties () = yojson_of_%s properties@;" (properties_type_name type_);
+  Fmt.pf o "type attributes = %s@\n" (resource_name |> to_attributes_type_name);
+
+  Fmt.pf o "let type_ = \"%s\"@\n" fqn;
+
+  Attributes.write_resource_attributes_generator o type_;
+
+  Fmt.pf o "let yojson_of_properties () = yojson_of_properties properties@;" ;
   Fmt.pf o "@]@;end@;in@;";
   Fmt.pf o
     "let resource@;\
@@ -113,9 +110,10 @@ let write_resource_interface o fqn name (type_ : resource_specification)
   |> List.iter (fun (name, spec) -> write_property_constructor o name spec);
   sorted_property_types
   |> List.iteri (fun i (name, (spec : property_specification)) ->
-         write_record_to_yojson o name spec.properties (i = 0));
-  write_record_to_yojson o (properties_type_name type_)  type_.properties true;
+         write_record_to_yojson o (name |> to_type_name) spec.properties (i = 0));
+  write_record_to_yojson o "properties"  type_.properties true;
   write_resource_attributes_specification o name type_.attributes;
-  write_resource_constructor o fqn name type_;
+  Attributes.write_resource_attributes_generator o type_;
+  Fmt.pf o "let cloudformation_type = \"%s\"@\n" fqn;
   Fmt.pf o "@]@,end@,@\n";
   Format.pp_print_newline o ()

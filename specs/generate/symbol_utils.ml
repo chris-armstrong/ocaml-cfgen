@@ -21,7 +21,8 @@ let to_safe_name str =
   match str with
   | "type" | "function" | "match" | "or" | "string" | "long" | "int" | "list"
   | "if" | "else" | "and" | "module" | "then" | "method" | "class" | "object"
-  | "include" | "open" | "end" | "struct" | "to" | "begin" | "mutable" ->
+  | "include" | "open" | "end" | "struct" | "to" | "begin" | "mutable"
+  | "properties" | "attributes" ->
       str ^ "_"
   | _ -> str
 
