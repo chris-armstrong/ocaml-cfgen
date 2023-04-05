@@ -95,9 +95,9 @@ let property_to_yojson_func = function
 let write_property_to_yojson o symbol { property_type; _ } =
   match property_type with
   | PropertyPrimitive primitive ->
-      Fmt.pf o "%s %s" (primitive_to_yojson primitive) symbol
+      Fmt.pf o "(%s %s)" (primitive_to_yojson primitive) symbol
   | PropertyList (ComplexPrimitive x) ->
-      Fmt.pf o "`List (List.map %s %s)" (primitive_to_yojson_func x) symbol
+      Fmt.pf o "((yojson_of_list %s) %s)" (primitive_to_yojson_func x) symbol
   | PropertyMap (ComplexPrimitive x) ->
       Fmt.pf o "(StringMap.yojson_of_t %s %s)"
         (primitive_to_yojson_func x)

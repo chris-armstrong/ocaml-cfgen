@@ -19,7 +19,7 @@ let resolve_token_create_fn = function
   | AttributeList (ComplexPrimitive String) -> Some "create_string_list_token"
   | _ -> None
 
-let write_resource_attributes_specification o resource_name
+let write_resource_attributes_specification o _
     (attributes : (string * attribute_type) list) =
   Fmt.pf o "type attributes@;=@,{@[<2>@;";
   Fmt.pf o "ref_: string;@;";

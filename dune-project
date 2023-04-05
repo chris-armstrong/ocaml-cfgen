@@ -7,6 +7,6 @@
   (synopsis "Generate AWS CloudFormation templates from code")
   (description "AWS CloudFormation can be difficult to manage directly. This project provides the
   ability to generate templates from code, and provide higher-level constructs for their generation")
-  (depends yojson ppx_yojson_conv containers ppx_deriving))
+  (depends yojson ppx_yojson_conv containers ppx_deriving (ppx_expect :with-test)))
 
 (using directory-targets 0.1)

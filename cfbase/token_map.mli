@@ -8,3 +8,5 @@ val lookup_string_token : string -> (module Resolvable) option
 val lookup_double_token : float -> (module Resolvable) option
 val lookup_int_token : int -> (module Resolvable) option
 val lookup_long_token : int64 -> (module Resolvable) option
+
+val has_string_token : string -> bool
