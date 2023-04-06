@@ -36,5 +36,7 @@ let yojson_of_long (x : Int64.t) : Yojson.Safe.t =
 
 let yojson_of_list (conv : 'a -> Yojson.Safe.t) l = `List (List.map conv l)
 
+let yojson_of_json x = x
+
 let prepend_option_map (l : (string * Yojson.Safe.t) list) con v (n : string) =
   match v with Some v -> (n, con v) :: l | None -> l

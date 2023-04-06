@@ -14,3 +14,5 @@ module Stack = Stack
 module Token_map = Token_map
 
 module Attributes = Attributes
+
+module Iam_policy = Iam_policy

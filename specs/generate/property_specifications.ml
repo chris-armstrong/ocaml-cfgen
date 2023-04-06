@@ -81,14 +81,14 @@ let write_property_specification o name (prop_spec : property_specification)
   Format.pp_force_newline o ()
 
 let property_to_yojson_func = function
-  | PropertyPrimitive x -> primitive_to_yojson_func x
+  | PropertyPrimitive x -> primitive_to_yojson x
   | PropertyRecord x -> Fmt.str "yojson_of_%s" (x |> to_type_name)
   | PropertyList (ComplexPrimitive x) ->
-      Fmt.str "(yojson_of_list %s)" (primitive_to_yojson_func x)
+      Fmt.str "(yojson_of_list %s)" (primitive_to_yojson x)
   | PropertyList (ComplexRecord x) ->
       Fmt.str "(yojson_of_list yojson_of_%s)" (x |> to_type_name)
   | PropertyMap (ComplexPrimitive x) ->
-      Fmt.str "(StringMap.yojson_of_t %s)" (primitive_to_yojson_func x)
+      Fmt.str "(StringMap.yojson_of_t %s)" (primitive_to_yojson x)
   | PropertyMap (ComplexRecord x) ->
       Fmt.str "(StringMap.yojson_of_t yojson_of_%s)" (x |> to_type_name)
 
@@ -97,10 +97,10 @@ let write_property_to_yojson o symbol { property_type; _ } =
   | PropertyPrimitive primitive ->
       Fmt.pf o "(%s %s)" (primitive_to_yojson primitive) symbol
   | PropertyList (ComplexPrimitive x) ->
-      Fmt.pf o "((yojson_of_list %s) %s)" (primitive_to_yojson_func x) symbol
+      Fmt.pf o "((yojson_of_list %s) %s)" (primitive_to_yojson x) symbol
   | PropertyMap (ComplexPrimitive x) ->
       Fmt.pf o "(StringMap.yojson_of_t %s %s)"
-        (primitive_to_yojson_func x)
+        (primitive_to_yojson x)
         symbol
   | PropertyRecord name ->
       Fmt.pf o "yojson_of_%s %s" (name |> to_type_name) symbol

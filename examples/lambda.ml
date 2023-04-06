@@ -4,30 +4,45 @@ open Cf_base
 
 let stack = Stack.make ()
 
+let lambda_assume_role_policy_document =
+  Iam_policy.yojson_of_policy
+    (Iam_policy.policy
+       [
+         Iam_policy.assume_role_statement
+           (Iam_policy.aws_service_principal "lambda");
+       ])
+
+let lambda_cloudwatch_logs_policy =
+  Iam_policy.(
+    yojson_of_policy
+      (policy
+         [
+           statement
+             ~action:
+               [
+                 "logs:CreateLogStream";
+                 "logs:CreateLogGroup";
+                 "logs:PutLogEvents";
+               ]
+             ~resource:[ "*" ] ();
+         ]))
+
 let role =
   Stack.add_resource stack "FunctionRole"
     (module Role)
     (Role.make_properties
-       ~assume_role_policy_document:
-         {|
-    {
-      "Statement": {
-        "Principal": {
-          "Service": "lambda.amazonaws.com"
-        },
-        "Action": "sts:AssumeRole"
-      }
-    }
-  |}
-       ~policies:[
+       ~assume_role_policy_document:lambda_assume_role_policy_document
+       ~policies:
+         [
+           Role.make_policy ~policy_name:"cloudwatch"
+             ~policy_document:lambda_cloudwatch_logs_policy ();
+         ]
+       ())
 
-        Role.make_policy ~policy_name:"cloudwatch" ~policy_document:"" ()
-       ] ())
-
-let resource =
+let _ =
   Stack.add_resource stack "FunctionX"
     (module Function)
-    (Function.make_properties ~runtime:"nodejs12.x"
+    (Function.make_properties ~runtime:"nodejs18.x"
        ~code:(Function.make_code ~s3_bucket:"bucket" ~s3_key:"my_key/key" ())
        ~role:role.attributes.arn ())
 ;;
@@ -37,5 +52,4 @@ Stack.add_string_parameter stack "TestParameter"
 
 let serialised_stack = Stack.serialise stack;;
 
-Fmt.pr "Stack:@\n%s@\n" (Yojson.Safe.to_string serialised_stack);;
-Fmt.pr "Ref:%s@\n" resource.attributes.ref_
+Fmt.pr "%s\n" (Yojson.Safe.pretty_to_string serialised_stack);;

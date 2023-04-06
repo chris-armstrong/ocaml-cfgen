@@ -52,7 +52,7 @@ let write_resource_properties_specification o _ (type_ : resource_specification)
     type_.properties
     |> List.iter (fun (name, prop_type) ->
            write_property_definition o name prop_type);
-    Fmt.pf o "@]@,}@," (* Fmt.pf o "[@@@@deriving yojson_of]" *))
+    Fmt.pf o "@]@,}@," )
   else Fmt.pf o "@,(** see %s *)@,type properties = unit@;" type_.documentation
 
 let write_resource_properties_constructor o _ (type_ : resource_specification) =
