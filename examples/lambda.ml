@@ -1,14 +1,36 @@
 open Cf_aws.Lambda
+open Cf_aws.IAM
 open Cf_base
 
 let stack = Stack.make ()
 
-let lambda_props =
-  Function.make_properties ~runtime:"nodejs12.x"
-    ~code:(Function.make_code ~s3_bucket:"bucket" ~s3_key:"my_key/key" ())
-    ~role:"role" ()
+let role =
+  Stack.add_resource stack "FunctionRole"
+    (module Role)
+    (Role.make_properties
+       ~assume_role_policy_document:
+         {|
+    {
+      "Statement": {
+        "Principal": {
+          "Service": "lambda.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+      }
+    }
+  |}
+       ~policies:[
 
-let resource = Stack.add_resource stack "FunctionX" (module Function) lambda_props;;
+        Role.make_policy ~policy_name:"cloudwatch" ~policy_document:"" ()
+       ] ())
+
+let resource =
+  Stack.add_resource stack "FunctionX"
+    (module Function)
+    (Function.make_properties ~runtime:"nodejs12.x"
+       ~code:(Function.make_code ~s3_bucket:"bucket" ~s3_key:"my_key/key" ())
+       ~role:role.attributes.arn ())
+;;
 
 Stack.add_string_parameter stack "TestParameter"
   ~description:"This is a test parameter" ~default_value:"Foobar" ()

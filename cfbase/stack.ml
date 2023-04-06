@@ -79,7 +79,7 @@ let yojson_of_stack_parameter resource: Yojson.Safe.t  =
   let open Util in
   let (type_, pairs) = (match resource.value with
     | ParameterString c -> ("String",
-      let base = Util.prepend_option_map [] yojson_of_string c.default_value "DefaultValue" in
+      let base = Util.prepend_option_map [] yojson_of_string c.default_value "Default" in
       let base = Util.prepend_option_map base yojson_of_int c.min_length "MinLength" in
       let base = Util.prepend_option_map base yojson_of_int c.max_length "MaxLength" in
       let base = Util.prepend_option_map base yojson_of_string c.allowed_pattern "AllowedPattern" in
@@ -87,14 +87,14 @@ let yojson_of_stack_parameter resource: Yojson.Safe.t  =
       base)
     | ParameterInteger c -> ("Number",
 
-      let base = Util.prepend_option_map [] yojson_of_int c.default_value "DefaultValue" in
+      let base = Util.prepend_option_map [] yojson_of_int c.default_value "Default" in
       let base = Util.prepend_option_map base yojson_of_int c.min_value "MinValue" in
       let base = Util.prepend_option_map base yojson_of_int c.max_value "MaxValue" in
       base
     )
     | ParameterFloat c -> ("Number",
 
-      let base = Util.prepend_option_map [] yojson_of_float c.default_value "DefaultValue" in
+      let base = Util.prepend_option_map [] yojson_of_float c.default_value "Default" in
       let base = Util.prepend_option_map base yojson_of_float c.min_value "MinValue" in
       let base = Util.prepend_option_map base yojson_of_float c.max_value "MaxValue" in
       base

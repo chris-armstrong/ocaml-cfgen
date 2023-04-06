@@ -10,3 +10,6 @@ val lookup_int_token : int -> (module Resolvable) option
 val lookup_long_token : int64 -> (module Resolvable) option
 
 val has_string_token : string -> bool
+type split_token = Verbatim of string | Unresolved of (module Resolvable)
+val pp_split_token : Format.formatter -> split_token -> unit
+val split_string_tokens : string -> split_token list
