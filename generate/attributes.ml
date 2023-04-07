@@ -1,7 +1,5 @@
 open Parse.Types
-open Primitives
 open Symbol_utils
-open Complex
 
 let format_attribute_type = function
   | AttributePrimitive String -> Some "string"

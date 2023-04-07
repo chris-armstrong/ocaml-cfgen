@@ -1,0 +1,69 @@
+{0 Reference}
+
+{1 Library Structure}
+
+- {!module:Cfgen.Template} provides the constructs needed to create a template,
+add resources, parameters and outputs, and then serialise it with
+{{:https://ocaml-community.github.io/yojson/yojson/index.html}Yojson}
+- {!module-Cfgen.BaseConstructs} contains the generated CloudFormation constructs
+  arranged into an [AWS] and [Alexa] namespace, with helpers for
+  creating resource properties (and their associated sub-types)
+- {!module-Cfgen.Helpers} contains DSL helpers for constructing inline
+  values for AWS-specific DSLs, like IAM policies.
+
+{1:howto How To}
+
+{2 Creating a stack}
+
+{@ocaml[
+  open Cfgen
+
+  let my_template_creator =
+    let template = Template.make () in
+    template
+]}
+
+{2 Creating resources}
+
+- Identify the resource module from {!Cfgen.BaseConstructs}, which are in a [Namespace.Service.Resource]
+  hiearchy.
+
+  For example, AWS IAM Roles are in {!Cfgen.BaseConstructs.AWS.IAM.Role} module
+
+- Construct the resource properties using the [make_properties] helper in the module
+
+  {i (These helpers save you needing to specify optional values on resources with
+  lots of properties, which is very common in AWS)}
+
+  {[
+    open Cfgen.BaseConstructs
+
+    let create_role template =
+      let tags = [AWS.IAM.Role.make_tag ~key:"Environment" ~value:"Development" ()] in
+      let props = AWS.IAM.Role.make_properties
+        ~assume_role_policy_document: assume_role
+        ~tags
+        () in
+      ...
+  ]}
+
+  {i Some properties have record types, which also have their own [make_<type_name>] function}
+
+- Add the resource to the template, specifying a [logical_id] to uniquely identify it in the template
+
+  {[
+    open Cfgen.BaseConstructs
+
+    let create_role =
+      let props = ... in
+      Template.add_resource template "MyRole" (module AWS.IAM.Role) props ()
+
+  ]}
+
+{2 Reference resource attributes in other resource properties}
+
+{2 Defining stack parameters}
+
+{2 Defining stack outputs}
+
+{2 Serialising a stack to JSON}

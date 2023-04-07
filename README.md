@@ -31,12 +31,6 @@ it is a in-progress prototype.
 Cloudformation definitions can be generated in OCaml, and
 a basic stack output in JSON format. (see `examples/lambda.ml`).
 
-No support for Cloudformation intrinsic functions, like `Fn::Ref` or `Fn::GetAtt`, is provided yet, and is needed
-to be useful. Support of these will probably be implemented
-similar to CDK, where token substitutions are used at runtime
-and then mapped at generation time, as this does not require
-intrinsics to be baked into the type system of each attribute.
-
 ## What can I do with this now?
 
 * Install dependencies in an opam switch and run `dune build` to view the output specifications (see `_build/default/spec` directory).

@@ -1,0 +1,43 @@
+{1 Background}
+
+ocaml-cfgen uses {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification.html}CloudFormation Resource Definitions} to generate OCaml types and Yojson
+serialisers in order to be able to generate CloudFormation templates.
+
+It is supported by a internal library called [Cf_base] which contains the base
+template API, special serialisers for handling resource relationships (through token values), and
+auxilliary DSL APIs (like {!module:Cfgen.Helpers.Iam_policy} for IAM policy generation).
+
+{2 Definitions}
+
+{3:cloudformation_definitions CloudFormation}
+- {b AWS CloudFormation} is an AWS service used to manage the lifecycle of resources
+- A {b CloudFormation Template} is a JSON or YAML file defining the parameters, reosurces and outputs used
+  to generate a CloudFormation Stack
+- A {b CloudFormation Stack} is the deployed (or instantiated) form of a template that
+  is created in a particular AWS Account and Region. Multiple stacks can be created from
+  the same template.
+- {b Resources} are instantiations of AWS service objects, defined in a template
+  and created or destroyed by a stack through stack creation and updates.
+- {b Deploying a CloudFormation template} creates a stack. Updating or deleting the stack by either
+  changing the values of its parameters or its template may cause resources to be added,
+  updated or deleted.
+- {b Parameters} are values that can be used to customise a stack's deployment, defined in the template
+- {b Outputs} are values specified by a template that are made available to parent templates and
+  via the CloudFormation Console and API. The may be optionalled {b exported} into a global namespace
+  for consumption by other stacks as inputs.
+- {b Resource Properties} define how a resource is configured. These values may be static
+  or derived from other {b resource attributes} or {b intrinsic functions}
+- {b Resource Attributes} are outputs from the creation of a resource made available in a
+  stack as inputs to the properties of other {b resources} or for {b output} values.
+  Referencing attributes of resources in properties creates an implicit dependency order
+  between those resources.
+- {b Intrinsic Functions} are used in CloudFormation stacks to retrieve resource attributes
+  (such as [Ref] or [Fn::GetAtt]), manipulate strings, test conditions (such as [Fn::If])
+  or retrieve the exported values of other stacks ([Fn::ImportValue]). They are executed
+  at deployment time.
+
+{2 Concepts}
+
+- Constructs
+- Tokens
+- Templates

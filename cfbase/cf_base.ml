@@ -7,12 +7,13 @@ module StringMap = struct
 
 end
 
-include Util
-
-module Stack = Stack
+module Serialisers = Util
+module Template = Template
 
 module Token_map = Token_map
 
 module Attributes = Attributes
 
+module Helpers = struct
 module Iam_policy = Iam_policy
+end
