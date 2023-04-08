@@ -11,6 +11,6 @@
   (maintainers "Chris Armstrong <info@chrisarmstrong.dev>")
   (homepage https://github.com/chris-armstrong/ocaml-cfgen)
   (bug_reports https://github.com/chris-armstrong/ocaml-cfgen/issues)
-  (depends yojson containers fmt ppx_deriving.show (ppx_expect :with-test)))
+  (depends yojson containers fmt ppx_deriving (ppx_expect :with-test) (odoc :with-doc)))
 
 (package (name cf_base))
