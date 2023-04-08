@@ -1,3 +1,4 @@
+(** Result of Map.Make(String) with YoJson serialiser (used internally) *)
 module StringMap :
   sig
     type key = string
@@ -45,8 +46,19 @@ module StringMap :
     val of_seq : (key * 'a) Seq.t -> 'a t
     val yojson_of_t : ('a -> 'b) -> 'a t -> [> `Assoc of (string * 'b) list ]
   end
+(** Serialiser functions for Yojson *)
 module Serialisers = Util
+(** Template management functions for generating templates, and adding resources, parameters, and outputs. *)
 module Template = Template
+(** Token mapping helpers for token value substitution *)
 module Token_map = Token_map
+
+(** Helpers used to create tokens for retrieving resource attributes *)
 module Attributes = Attributes
+
+(** AWS-specific DSL helpers, e.g. defining IAM policies *)
 module Helpers : sig module Iam_policy = Iam_policy end
+
+(** Create tokens for CloudFormationintrinsic functions (such as [Fn::ImportValue] or [Fn::Split])
+    and pseudoparameters (such as [AWS::AcountId] or [AWS::NoValue]) *)
+module Intrinsics = Intrinsics

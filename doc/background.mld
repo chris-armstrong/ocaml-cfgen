@@ -1,4 +1,4 @@
-{1 Background}
+{0 Background}
 
 ocaml-cfgen uses {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification.html}CloudFormation Resource Definitions} to generate OCaml types and Yojson
 serialisers in order to be able to generate CloudFormation templates.
@@ -7,9 +7,11 @@ It is supported by a internal library called [Cf_base] which contains the base
 template API, special serialisers for handling resource relationships (through token values), and
 auxilliary DSL APIs (like {!module:Cfgen.Helpers.Iam_policy} for IAM policy generation).
 
-{2 Definitions}
+{1 Definitions}
 
-{3:cloudformation_definitions CloudFormation}
+Concepts and definitions that appear in this documentation for CloudFormation and cfgen.
+
+{2:cloudformation_definitions CloudFormation Concepts}
 - {b AWS CloudFormation} is an AWS service used to manage the lifecycle of resources
 - A {b CloudFormation Template} is a JSON or YAML file defining the parameters, reosurces and outputs used
   to generate a CloudFormation Stack
@@ -36,8 +38,36 @@ auxilliary DSL APIs (like {!module:Cfgen.Helpers.Iam_policy} for IAM policy gene
   or retrieve the exported values of other stacks ([Fn::ImportValue]). They are executed
   at deployment time.
 
-{2 Concepts}
+{2 cfgen Concepts}
 
-- Constructs
-- Tokens
-- Templates
+{3:templates Templates}
+
+{!type:cfgen.Template.t} Template types represent a CloudFormation template under assembly.
+
+Use the API functions in {!module:cfgen.Template} to add resources, parameters or outputs.
+
+{3:constructs Constructs}
+
+Constructs are a higher level abstraction than CloudFormation resources. Borrowing from {{:https://docs.aws.amazon.com/cdk/v2/guide/constructs.html}CDK
+terminology}, we can define constructs through different levels of abstraction:
+
+* L1 constructs are the generated CloudFormation resource types in {!module:cfgen.BaseConstructs}
+* L2 constructs are higher-level than L1 resources, usually centered on a primary resource type
+  (like Lambda functions or API Gateway instances), but with helper functions to generate the "glue"
+  resources that surround them (like IAM roles, Lambda Event Source Mappings, Event Bridge rules,
+  etc). An L2 construct will typically generate more than one underlying CloudFormation resource
+* L3 constructs implement patterns designed to implement common tasks. They will combine multiple
+  L2 and L1 constructs to achieve a common goal, like deploying a Lambda function to respond to an
+  EventBridge Rule with the correct level of failure handling (like DLQs) and monitoring (like CloudWatch alarms).
+  They typically cross service boundaries for this reason.
+
+cfgen only provides L1 constructs at this time. You can achieve L2 and L3 constructs through standard
+composition and abstraction mechanisms in OCaml, e.g. functions and modules, but cfgen does not
+provide any special support for working with them (yet).
+
+{3:tokens Tokens}
+
+Tokens are special strings or numbers that are substituted with CloudFormation intrinsic
+functions at template serialisation. They permit access to dynamic values, such as resource
+attributes, account or region variables, or imported values from other stack exports,
+when constructing resource properties or template outputs.

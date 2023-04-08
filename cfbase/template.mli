@@ -133,6 +133,39 @@ val add_parameter :
   unit ->
   unit
 
+(**
+  Add a new string parameter to the template
+
+  Parameters are used to customise the stack
+  when the template is deployed. They may be
+  referenced in resource properties or outputs.
+
+  {[
+    add_string_parameter
+      template
+      parameter_name
+      ?description
+      ?no_echo
+      ?min_length
+      ?max_length
+      ?allowed_values
+      ?allowed_pattern
+      ?default_value
+      ()
+  ]}
+
+  - [template] is the {!type:t} instance of the template
+  - [parameter_name] is a string uniquely identifying the parameter in the context of the template
+  - [?description] optionally provides a parameter description
+  - [?no_echo] optionally suppresses the parameter value from being shown in the AWS Console
+    (not to be used for secrets, as they can still be recovered if exposed as outputs or resource
+      properties)
+  - [?min_length] minimum parameter value length
+  - [?max_length] minimum parameter value length
+  - [?allowed_values] constrain the allowed values to the specified list
+  - [?allowed_pattern] constrain the allowed values to the pattern (see {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-regexes.html}AWS documentation} on regexes in CloudFormation)
+  - [?default_value] is the default value used if the parameter is not specified when first deploying the template
+  *)
 val add_string_parameter :
   t ->
   string ->
@@ -146,10 +179,29 @@ val add_string_parameter :
   unit ->
   unit
 
+(**
+    Add an output to the stack
+
+    Stack outputs can be used to make attributes of
+    resources available to parent stacks or exported
+    for use in outher stacks in the same account/region.
+
+    {[
+      add_ouput template output_name ?export ?description ()
+    ]}
+
+    - [template] is the template to add to
+    - [output_name] is a unique identifier for the output in the context of the template
+    - [export] is an optional name that makes the parameter available to other stacks via [Fn::ImportValue].
+      {b It must be globally unique among all stacks in the same account and region}, so it is recommended you
+      substitute another value (like the environment or stack name) into the export value so the stack
+      can be deployed multiple times.
+    - [description] is an optional description for the output
+  *)
 val add_output :
   t -> string -> string -> ?export:string -> ?description:string -> unit -> unit
 
 (**
-    Serialise the template to Yojson structure
+    Serialise the template to Yojson structure for JSON serialisation
   *)
 val serialise : t -> Yojson.Safe.t

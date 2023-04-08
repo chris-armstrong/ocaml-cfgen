@@ -17,3 +17,5 @@ module Attributes = Attributes
 module Helpers = struct
 module Iam_policy = Iam_policy
 end
+
+module Intrinsics = Intrinsics
