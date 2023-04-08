@@ -2,34 +2,24 @@
 
 Generate CloudFormation stacks with OCaml
 
-## Background
+## Getting Started
+
+* [Tutorial](https://chris-armstrong.github.io/ocaml-cfgen/cfgen/tutorial): learn about features and how to use it
+* [Library Documentation](https://chris-armstrong.github.io/ocaml-cfgen/cfgen/): reference manual, concepts and API documentation
+
+## Status
 
 This is a work in progress.
 
-The intention behind this project is to make it easier
-to generate CloudFormation stacks in OCaml code, taking
-advantage of the type system and fast compiler to aid
-development.
-
-This work was inspired by (and built in frustration with)
-the AWS CDK.
+You can already use it to define CloudFormation stacks for all the resource
+types provided in the AWS CloudFormation Resource Specification, but not all
+CloudFormation features may be supported.
 
 ## Implementation
 
 [Cloudformation definitions provided by AWS](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification.html) have been
 used to generate OCaml types for the `Properties` clauses
 of each CloudFormation Type.
-
-A basic support library, which allows constructing a stack
-with parameters, is provided as `Cf_base` (not exported).
-
-## Status
-
-This isn't particularly useful in its current form as
-it is a in-progress prototype.
-
-Cloudformation definitions can be generated in OCaml, and
-a basic stack output in JSON format. (see `examples/lambda.ml`).
 
 ## What can I do with this now?
 
