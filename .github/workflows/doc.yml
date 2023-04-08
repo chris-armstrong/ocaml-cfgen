@@ -1,5 +1,5 @@
 name: docs workflow
-on: 
+on:
   push:
 jobs:
   build:
@@ -21,8 +21,8 @@ jobs:
       with:
         # Version of the OCaml compiler to initialise
         ocaml-compiler: ${{ matrix.ocaml-compiler }}
-      
-    - run: opam install . --deps-only
+
+    - run: opam install ./cfgen.opam --deps-only --with-doc
     - run: opam exec -- dune build @doc
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v1.0.8
