@@ -1,0 +1,29 @@
+name: docs workflow
+on: 
+  push:
+jobs:
+  build:
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+        ocaml-compiler:
+          - 4.14.x
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Set up OCaml
+      # You may pin to the exact commit or the version.
+      # uses: ocaml/setup-ocaml@6d924c1a7769aa5cdd74bdd901f6e24eb05024b1
+      uses: ocaml/setup-ocaml@v2
+      with:
+        # Version of the OCaml compiler to initialise
+        ocaml-version: 5.0.0 # optional, default is 4.08.1
+        # URL of the repository to fetch packages from
+        # opam-repository: # optional, default is 
+    - run: opam install . --deps-only
+    - run: opam exec -- dune build @doc
+      
