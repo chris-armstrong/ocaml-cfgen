@@ -241,5 +241,6 @@
 
 (library (name cfgen)
 (public_name cfgen)
- (libraries cf_base)
+ (libraries fmt yojson str)
+ (preprocess (pps ppx_expect))
  )

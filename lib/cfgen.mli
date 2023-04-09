@@ -3,13 +3,19 @@
 
     *)
 
-(** String Map (including yojson serialiser)*)
-module StringMap = Cf_base.StringMap
-module Serialisers = Cf_base.Serialisers
-module Template = Cf_base.Template
-module Token_map = Cf_base.Token_map
-module Attributes = Cf_base.Attributes
-module Helpers = Cf_base.Helpers
+(** Serialisation helpers*)
+module Serialisers = Util
+(** Template generation *)
+module Template = Template
+(** Token generation and mapping *)
+module Token_map = Token_map
+(** Resource attribute token helpers *)
+module Attributes = Attributes
+(** Helpers for AWS domain-specific/embedded languages*)
+module Helpers : sig
+  (** IAM Policy generation*)
+  module Iam_policy = Iam_policy
+end
 
 (** BaseConstructs contains the generated definitions for CloudFormation resources
     from the {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-resource-specification.html}AWS CloudFormation Resource Specification} *)

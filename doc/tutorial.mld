@@ -4,23 +4,28 @@ This tutorial takes you through the basics needed to use [cfgen] to
 create a CloudFormation template with OCaml, showing you the main
 functionality of the library.
 
+{i NOTE: These instructions have only been verified on Linux}
+
 {1 Prerequisites}
 
 You will need:
 
 - {{:https://opam.ocaml.org/doc/Install.html}opam} installed on your system
-- An {{:https://opam.ocaml.org/doc/Manual.html#Switches}opam switch} with [merlin], [ocaml], [dune], [ocaml-lsp] and [yojson] installed
+- An {{:https://opam.ocaml.org/doc/Manual.html#Switches}opam switch}
 - {i optional} An editor with Language Server (LSP) support, such as VSCode
 
-{1 Installation}
+{1 Set up your switch}
 
-Install {b cfgen} into your switch e.g.
+Install [cfgen] into your switch along with some depedencies e.g.
 
 {@sh[
-opam install cfgen
+opam install cfgen yojson merlin ocaml-lsp dune
 ]}
 
-{1 Set up a project}
+{i ([merlin], [dune], [ocaml-lsp] are for your editor and build system, yojson
+for JSON serialisation)}
+
+{1 Set up a new project}
 
 Create a new directory called [lambdadef] with the following files
 
@@ -32,8 +37,26 @@ Create a new directory called [lambdadef] with the following files
     )
   ]}
 
+- [dune-project]
+
+  {@ocaml[
+    (lang dune 3.5)
+    (generate_opam_files true)
+    (package
+      (name lambdadef)
+      (allow_empty)
+      (depends cfgen yojson)
+    )
+  ]}
+
 - [lambdadef.ml]
   {@ocaml[
     open Cfgen
     let template = Template.make ();;
   ]}
+
+Validate your project can build in your shell:
+
+{@sh[
+dune build
+]}

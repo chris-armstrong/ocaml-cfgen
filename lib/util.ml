@@ -38,5 +38,10 @@ let yojson_of_list (conv : 'a -> Yojson.Safe.t) l = `List (List.map conv l)
 
 let yojson_of_json x = x
 
+module StringMap = struct
+  include Map.Make(String)
+  let yojson_of_t value_conv s = `Assoc (fold (fun (k: string) v l -> (k, value_conv v)::l) s [])
+end
+
 let prepend_option_map (l : (string * Yojson.Safe.t) list) con v (n : string) =
   match v with Some v -> (n, con v) :: l | None -> l

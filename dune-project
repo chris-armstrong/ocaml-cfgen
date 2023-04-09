@@ -14,4 +14,3 @@
   (bug_reports https://github.com/chris-armstrong/ocaml-cfgen/issues)
   (depends yojson containers fmt ppx_deriving (ppx_expect :with-test) (odoc :with-doc)))
 
-(package (name cf_base) (depends fmt yojson ppx_deriving (ppx_expect :with-test)))

@@ -63,8 +63,8 @@ let write_resources_by_keyed_namespace =
              let service_filename = Fmt.str "%s.ml" service in
              let soc = Out_channel.open_text service_filename in
              let sf = Format.formatter_of_out_channel soc in
-             Fmt.pf sf "open Cf_base@\n@\n";
-             Fmt.pf sf "open Cf_base.Serialisers@\n@\n";
+             (* Fmt.pf sf "open @\n@\n"; *)
+             Fmt.pf sf "open Util@\n@\n";
              resource_tuples
              |> List.iter (fun (resource, type_, prop_types) ->
                     write_resource sf namespace service resource type_
