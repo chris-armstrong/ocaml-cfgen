@@ -12,7 +12,17 @@ You will need:
 
 - {{:https://opam.ocaml.org/doc/Install.html}opam} installed on your system
 - An {{:https://opam.ocaml.org/doc/Manual.html#Switches}opam switch}
-- {i optional} An editor with Language Server (LSP) support, such as VSCode
+- {i optional} An editor with Language Server (LSP) support, such as VSCode set
+  up with the {{:https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform}OCaml Platform} plugin
+
+and optionally:
+
+- {i optional} Install cfn-lint for validating the template
+  [pip install --global --upgrade awscli cfn-lint]
+- {i optional} {{:https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html}Install the AWS CLI} for deploying the template
+
+It is assumed you have a reasonable working knowledge of basic AWS
+resources like IAM, Lambda as well as deployment with CloudFormation.
 
 {1 Set up your switch}
 
@@ -38,7 +48,6 @@ Create a new directory called [lambdadef] with the following files
   ]}
 
 - [dune-project]
-
   {@ocaml[
     (lang dune 3.5)
     (generate_opam_files true)
@@ -53,10 +62,133 @@ Create a new directory called [lambdadef] with the following files
   {@ocaml[
     open Cfgen
     let template = Template.make ();;
+
+    Format.printf "%s\n" (template |> Template.serialise |> Yojson.Safe.pretty_to_string)
   ]}
 
 Validate your project can build in your shell:
 
 {@sh[
 dune build
+]}
+
+And if you execute the code, you should see a minimal CloudFormation template
+
+{@sh[
+dune exec ./lambdadef.exe
+]}
+
+{1 Writing code with cfgen in your editor}
+
+When working in your editor, run [dune build --watch] in a shell in the background.
+
+This is needed for code completion and compile error reporting. Your project will need
+to have built successfully at least once for these to work (so comment out any
+broken code when you start to get completion/error reporting back, save, then
+start uncommenting it again).
+
+{1 Add a resource }
+
+All AWS resource types have been auto-generated into the {!module-cfgen.BaseConstructs.AWS} module.
+
+Let's define a NodeJS based lambda function with some inline code.
+
+{2 Create an IAM Role}
+
+First we'll define an IAM role.
+
+[lambdadef.ml]
+{@ocaml[
+(* after let template = Template.make() *)
+
+(* A trust policy tells IAM what services (or other "Principals") can
+   assume the role
+*)
+let trust_policy = Helpers.Iam_policy.(
+  policy [
+    assume_role_statement (aws_service_principal "lambda")
+  ]
+  |> yojson_of_policy
+)
+
+(* Add a role to the template *)
+let hello_world_role = Template.add_resource
+  template
+  "HelloWorldRole"
+  (module AWS.IAM.Role)
+  AWS.IAM.Role.(
+    make_properties
+      ~assume_role_policy_document: trust_policy
+      (* Use the builtin managed policy that lets the lambda write CloudWatch logs *)
+      ~managed_policy_arns: ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"]
+     ()
+  )
+]}
+
+{2 Add the lambda function}
+
+[lambdadef.ml]
+{@ocaml[
+(* after role declaration *)
+
+let hello_world_code = {|
+const handler = async (event) => {
+  const response = `Hello ${event.name ?? "there"}!`;
+  return { response };
+};
+module.exports.handler = handler;
+|};;
+
+let _ = Template.add_resource
+  template
+  "HelloWorldFunction"
+  (module AWS.Lambda.Function)
+  AWS.Lambda.Function.(make_properties
+    ~code: (make_code ~zip_file:hello_world_code ())
+    ~runtime: "nodejs18.x"
+    ~handler: "index.handler"
+    ~role: hello_world_role.attributes.arn
+    ()
+  )
+]}
+
+and then compile and re-execute (dune exec will rebuild automatically):
+
+{@sh[
+dune exec ./lambdadef.exe
+]}
+
+{i optional} If we wanted to validate and deploy the template, save it to a file:
+
+{@sh[
+dune exec ./lambdadef.exe > test_stack.json
+}]
+
+validate it with cfn-lint,
+{@sh[
+cfn-lint test_stack.json
+}]
+
+and deploy it with AWS CLI.
+{@sh[
+aws cloudformation deploy \
+  --stack-name lambdadef \
+  --template-file ./test_stack.json \
+  --capabilities CAPABILITY_IAM
+}]
+
+Once it is deployed, find its name and invoke it directly from the AWS CLI:
+
+{[
+> aws cloudformation describe-stack-resource --stack-name lambdadef --logical-resource-id HelloWorldFunction
+
+< { .. <json output> } # copy the PhysicalResourceId - this is the function name e.g. lambdadef-HelloWorldFunction-98DGP58DVzfz
+
+> aws lambda invoke --function-name <function_name> test_out
+<{
+<    "StatusCode": 200,
+<    "ExecutedVersion": "$LATEST"
+<}
+> cat test_out
+> rm test_out
 ]}
