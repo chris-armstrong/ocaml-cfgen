@@ -13,8 +13,8 @@ module Token_map = Token_map
 module Attributes = Attributes
 (** Helpers for AWS domain-specific/embedded languages*)
 module Helpers : sig
-  (** IAM Policy generation*)
   module Iam_policy = Iam_policy
+  (** IAM Policy generation*)
 end
 
 (** BaseConstructs contains the generated definitions for CloudFormation resources
@@ -52,8 +52,9 @@ module BaseConstructs : sig
   construct CloudFormation resources in your stack.
 *)
 
-(** AWS constructs *)
-module AWS = Cf_aws
+  (** AWS constructs *)
+  module AWS = Cf_aws
 
-(** Alex constructs *)
-module Alexa = Cf_alexa end
+  (** Alex constructs *)
+  module Alexa = Cf_alexa
+end
