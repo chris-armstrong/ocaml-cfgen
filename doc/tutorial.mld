@@ -162,12 +162,12 @@ dune exec ./lambdadef.exe
 
 {@sh[
 dune exec ./lambdadef.exe > test_stack.json
-}]
+]}
 
 validate it with cfn-lint,
 {@sh[
 cfn-lint test_stack.json
-}]
+]}
 
 and deploy it with AWS CLI.
 {@sh[
@@ -175,7 +175,7 @@ aws cloudformation deploy \
   --stack-name lambdadef \
   --template-file ./test_stack.json \
   --capabilities CAPABILITY_IAM
-}]
+]}
 
 Once it is deployed, find its name and invoke it directly from the AWS CLI:
 
