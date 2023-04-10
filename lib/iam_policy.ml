@@ -19,17 +19,11 @@ let yojson_of_principal_map : principal_map -> Yojson.Safe.t = function
       `Assoc [ ("CanonicalUser", (yojson_of_list yojson_of_string) x) ]
   | Federated x -> `Assoc [ ("Federated", (yojson_of_list yojson_of_string) x) ]
 
-type principal =
-  | Principal of principal_map
-  | NotPrincipal of principal_map
-  | PrincipalAll
-  | NotPrincipalAll
+type principal = Principal of principal_map | PrincipalAll
 
 let yojson_of_principal : principal -> Yojson.Safe.t = function
-  | Principal x -> `Assoc [ ("Principal", yojson_of_principal_map x) ]
-  | NotPrincipal x -> `Assoc [ ("NotPrincipal", yojson_of_principal_map x) ]
-  | PrincipalAll -> `Assoc [ ("Principal", `String "*") ]
-  | NotPrincipalAll -> `Assoc [ ("NotPrincipal", `String "*") ]
+  | Principal x -> yojson_of_principal_map x
+  | PrincipalAll -> `String "*"
 
 type effect = Allow | Deny
 
@@ -100,10 +94,6 @@ type condition_operator_spec =
   | ForValue of condition_operator
   | ForAnyValue of condition_operator
   | ForAllValues of condition_operator
-(* | ForValue of conditionKey * conditionValue (* ForValue is a convenience - a single element list with ForValues should be equivalent *)
-   | ForValues of conditionKey * conditionValue list
-   | ForAnyValue of conditionKey * conditionValue list
-   | ForAllValues of conditionKey * conditionValue list *)
 
 let yojson_of_condition_term ((key, values) : condition_term) : Yojson.Safe.t =
   `Assoc [ (key, yojson_of_list yojson_of_string values) ]
@@ -126,21 +116,28 @@ let yojson_of_condition (condition : condition) : Yojson.Safe.t =
 type statement = {
   sid : string option;
   principal : principal option;
+  not_principal : principal option;
   effect : effect;
   action : action;
   resource : resource option;
   condition : condition option;
 }
 
-let yojson_of_statement (statement: statement) : Yojson.Safe.t =
+let yojson_of_statement (statement : statement) : Yojson.Safe.t =
   let base = prepend_option_map [] yojson_of_string statement.sid "Sid" in
   let base =
     prepend_option_map base yojson_of_principal statement.principal "Principal"
   in
   let base =
+    prepend_option_map base yojson_of_principal statement.not_principal
+      "NotPrincipal"
+  in
+  let base =
     prepend_option_map base yojson_of_condition statement.condition "Condition"
   in
-  let base = prepend_option_map base yojson_of_resource statement.resource "Resource" in
+  let base =
+    prepend_option_map base yojson_of_resource statement.resource "Resource"
+  in
   let required =
     [
       ("Effect", yojson_of_effect statement.effect);
@@ -157,10 +154,23 @@ type policy = {
 
 let yojson_of_policy policy =
   let base = prepend_option_map [] yojson_of_string policy.id "Id" in
-  let required = ["Version", yojson_of_iam_policy_version policy.version; "Statement", yojson_of_list yojson_of_statement policy.statement] in
-  `Assoc (List.concat [required; base])
+  let required =
+    [
+      ("Version", yojson_of_iam_policy_version policy.version);
+      ("Statement", yojson_of_list yojson_of_statement policy.statement);
+    ]
+  in
+  `Assoc (List.concat [ required; base ])
 
-let statement ?(effect=Allow) ?sid ?principal ?condition ?resource ~action () = { effect; sid; principal; condition; action; resource }
-let aws_service_principal service = Principal (Service [service ^ ".amazonaws.com"])
-let assume_role_statement ?(effect=Allow) principal = statement ~effect ~action:["sts:AssumeRole"] ~principal ()
-let policy ?(version=PolicyVersion2012_10_17) ?id statements = { version; id; statement= statements }
+let statement ?(effect = Allow) ?sid ?principal ?not_principal ?condition
+    ?resource ~action () =
+  { effect; sid; principal; not_principal; condition; action; resource }
+
+let aws_service_principal service =
+  Principal (Service [ service ^ ".amazonaws.com" ])
+
+let assume_role_statement ?(effect = Allow) principal =
+  statement ~effect ~action:[ "sts:AssumeRole" ] ~principal ()
+
+let policy ?(version = PolicyVersion2012_10_17) ?id statements =
+  { version; id; statement = statements }
