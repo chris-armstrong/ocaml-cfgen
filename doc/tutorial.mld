@@ -162,6 +162,8 @@ Compile and re-execute ([dune exec] will rebuild the code):
 dune exec ./lambdadef.exe
 ]}
 
+{2 {i (optional)} Lint and deploy the template}
+
 {i optional} If we wanted to validate and deploy the template, save it to a file:
 
 {@sh[
@@ -198,11 +200,11 @@ Once it is deployed, find its name and invoke it directly from the AWS CLI:
 > rm test_out
 ]}
 
-{2 Use a parameter to customise the resources}
+{1 Add a template parameter}
 
 Let's use a parameter to provide the name of the environment, and use
 it to generate an [Environment] tag for tracking the resources in the
-stack.
+stack against a particular environment.
 
 Add the following code after the template object creation:
 
@@ -216,7 +218,7 @@ let environment = Template.add_string_parameter
 ]}
 
 Then, for both the role and lambda resource, add the following line to its
-[make_properties] call to register a tag
+[make_properties] call to register a tag.
 
 - Role
 
@@ -235,3 +237,135 @@ Then, for both the role and lambda resource, add the following line to its
       ~tags: [make_tag ~key: "Environment" ~value: environment.ref_ ()]
       ()
   ]}
+
+In the output, we can see the parameter, and the
+reference in the generated tag:
+
+{@json[
+{
+  "Parameters": {
+    "Environment": {
+      "Type": "String",
+      "AllowedValues": [ "production", "staging", "development" ],
+      "Default": "production"
+    }
+  },
+  "Resources": {
+    "HelloWorldFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Tags": [
+          { "Value": { "Ref": "Environment" }, "Key": "Environment" }
+        ],
+        "Runtime": "nodejs18.x",
+        ...
+      }
+    },
+    "HelloWorldRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+         "Tags": [
+           { "Key": "Environment", "Value": { "Ref": "Environment" } }
+         ],
+      }
+    }
+    ...
+]}
+
+{1 Add a stack output}
+
+Lastly, we'll create a stack output to share the name of the
+lambda function with other stacks via an export.
+
+{2 Export a value from the stack as an output}
+
+Change the declaration of the function to specify a variable name
+
+i.e.
+
+{@ocaml[
+let hello_world_function = Template.add_resource
+  template
+  "HelloWorldFunction"
+  (module AWS.Lambda.Function)
+]}
+
+and then after the function declaration, add
+the output referencing it:
+
+{@ocaml[
+Template.add_output
+  template
+  "HelloWorldFunctionName"
+  hello_world_function.attributes.ref_
+  ~export:(Intrinsics.stack_name ^ "-hello-world-function-name")
+  ()
+]}
+
+{i The export has been added using an intrinsic from {!module-Intrinsics},
+which generate {!page-background.tokens} referencing values
+only available at deployment time}
+
+when you re-run the template declaration, the
+references to the lambda function and export are
+added in the [Outputs] section of the template:
+
+{@json[
+  "Outputs": {
+    "HelloWorldFunctionName": {
+      "Export": {
+        "Name": {
+          "Fn::Join": [
+            "", [{ "Ref": "AWS::StackName" }, "-hello-world-function-name" ]
+          ]
+        }
+      },
+      "Value": { "Ref": "HelloWorldFunction" }
+    }
+  }
+]}
+
+{2 {i (optional)} Checking the output value}
+
+If you generate and deploy the stack again, you can check out
+the generated value.
+
+{@sh[
+> dune exec ./lambdadef.exe > ./test_stack.json
+> aws cloudformation deploy \
+  --stack-name lambdadef \
+  --template-file ./test_stack.json \
+  --parameter-overrides Environment=development
+  --capabilities CAPABILITY_IAM
+> aws cloudformation describe-stacks --stack-name lambdadef
+<                                                                                                                                                                     [0/4513]
+    "Stacks": [
+        {
+            ...
+            "StackName": "lambdadef",
+            "Parameters": [
+                {
+                    "ParameterKey": "Environment",
+                    "ParameterValue": "development"
+                }
+            ],
+            "CreationTime": "2023-04-10T11:58:46.004000+00:00",
+            "LastUpdatedTime": "2023-04-13T11:00:58.510000+00:00",
+            "RollbackConfiguration": {},
+            "StackStatus": "UPDATE_COMPLETE",
+            "DisableRollback": false,
+            "NotificationARNs": [],
+            "Capabilities": [
+                "CAPABILITY_IAM"
+            ],
+            "Outputs": [
+                {
+                    "OutputKey": "HelloWorldFunctionName",
+                    "OutputValue": "lambdadef-HelloWorldFunction-98DGP58DVzfz",
+                    "ExportName": "lambdadef-hello-world-function-name"
+                }
+            ],
+            ...
+        }
+    ]
+]}

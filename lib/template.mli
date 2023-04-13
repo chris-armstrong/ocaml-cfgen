@@ -13,8 +13,9 @@
 
     Once you have finished adding resources, parameters
     and outputs to your template, you can serialise it
-    to a [Yojson.Safe.t] object, which
-    can then be output as JSON with the [Yojson.Safe.pretty_to_string]
+    to a [Yojson.Safe.t] object, which in turn
+    can then be output as a JSON string with
+    the [Yojson.Safe.pretty_to_string] function.
     *)
 
 (**
@@ -60,7 +61,7 @@ type 'attributes logical_resource = {
 }
 
 (**
-  A reference to a created paraemeter *)
+  A reference to a created parameter *)
 type parameter = {
   (** A token that resolves to a parameter's value at deployment time. Equivalent of [Ref: "ParameterName"]*)
   ref_: string;
@@ -116,7 +117,8 @@ val add_resource :
   Add a new parameter to the template
 
   Parameters are used to customise the stack
-  when the template is deployed. They may be
+  when the template is deployed. The returned [ref_]
+  is one of the serialised {!page-background.tokens}, which can be
   referenced in resource properties or outputs.
 
   {[
@@ -141,10 +143,11 @@ val add_parameter :
   parameter
 
 (**
-  Add a new string parameter to the template
+  Add a new string parameter to the template.
 
   Parameters are used to customise the stack
-  when the template is deployed. They may be
+  when the template is deployed. The returned [ref_]
+  is one of the serialised {!page-background.tokens}, which can be
   referenced in resource properties or outputs.
 
   {[
@@ -187,11 +190,11 @@ val add_string_parameter :
   parameter
 
 (**
-    Add an output to the stack
+    Add an output to the stack.
 
     Stack outputs can be used to make attributes of
     resources available to parent stacks or exported
-    for use in outher stacks in the same account/region.
+    for use in other stacks in the same account/region.
 
     {[
       add_ouput template output_name ?export ?description ()
