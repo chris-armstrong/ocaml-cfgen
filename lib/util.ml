@@ -7,7 +7,7 @@ let yojson_of_string (x : string) : Yojson.Safe.t =
            | Verbatim part -> `String part
            | Unresolved (module Resolve : Resolvable) -> Resolve.resolve ())
     in
-      if (List.length join_parts) > 1  then `Assoc [ ("Fn::Join", `List join_parts) ]
+      if (List.length join_parts) > 1  then `Assoc [ ("Fn::Join", `List [`String ""; `List join_parts]) ]
       else List.hd join_parts
   else `String x
 
