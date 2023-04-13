@@ -59,6 +59,10 @@ type 'attributes logical_resource = {
   attributes : 'attributes;
 }
 
+type parameter = {
+  ref_: string;
+}
+
 (** A template type - create with {!val:make} *)
 type t
 
@@ -131,7 +135,7 @@ val add_parameter :
   ?description:string ->
   ?no_echo:bool ->
   unit ->
-  unit
+  parameter
 
 (**
   Add a new string parameter to the template
@@ -177,7 +181,7 @@ val add_string_parameter :
   ?allowed_pattern:string ->
   ?default_value:string ->
   unit ->
-  unit
+  parameter
 
 (**
     Add an output to the stack

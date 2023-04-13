@@ -24,7 +24,7 @@ type parameter_constraints =
   | ParameterInteger of int parameter_number_constraints
   | ParameterFloat of float parameter_number_constraints
 
-type parameter = {
+type parameter_input = {
   constraints : parameter_constraints;
   description : string option;
   no_echo : bool option;
@@ -37,7 +37,7 @@ type output = {
 }
 
 type t = {
-  parameters : parameter StringMap.t ref;
+  parameters : parameter_input StringMap.t ref;
   resources : (module StackResource) StringMap.t ref;
   outputs : output StringMap.t ref;
 }
@@ -63,6 +63,10 @@ module type ResourceType = sig
   val cloudformation_type : string
 end
 
+type parameter = {
+  ref_: string;
+}
+
 let add_resource (type a p) stack logical_id
     (resource_type :
       (module ResourceType with type attributes = a and type properties = p))
@@ -87,7 +91,7 @@ let add_resource (type a p) stack logical_id
 let add_parameter stack name constraints ?description ?no_echo () =
   let parameter = { constraints; description; no_echo } in
   stack.parameters := StringMap.add name parameter !(stack.parameters);
-  ()
+  { ref_= Token_map.create_string_token ~token_type:"Parameter" (Attributes.ref_resolver name)}
 
 let add_output stack name value ?export ?description () =
   let output = { export; value; description } in
@@ -102,10 +106,10 @@ let add_string_parameter stack name ?description ?no_echo ?min_length
   in
   let parameter = { constraints; description; no_echo } in
   stack.parameters := StringMap.add name parameter !(stack.parameters);
-  ()
+  { ref_= Token_map.create_string_token ~token_type:"Parameter" (Attributes.ref_resolver name)}
 
 let yojson_of_stack_parameter
-    ({ constraints; no_echo; description } : parameter) : Yojson.Safe.t =
+    ({ constraints; no_echo; description } ) : Yojson.Safe.t =
   let open Util in
   let type_, pairs =
     match constraints with
