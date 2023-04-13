@@ -18,3 +18,5 @@ module Helpers = struct
   module Iam_policy = Iam_policy
   (** IAM Policy generation*)
 end
+
+module Intrinsics = Intrinsics

@@ -58,3 +58,7 @@ module BaseConstructs : sig
   (** Alex constructs *)
   module Alexa = Cf_alexa
 end
+
+(** Intrinsic references generated at deployment time, like stack name or AWS Account ID/Region,
+    made available as tokens. *)
+module Intrinsics = Intrinsics
