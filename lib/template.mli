@@ -59,7 +59,10 @@ type 'attributes logical_resource = {
   attributes : 'attributes;
 }
 
+(**
+  A reference to a created paraemeter *)
 type parameter = {
+  (** A token that resolves to a parameter's value at deployment time. Equivalent of [Ref: "ParameterName"]*)
   ref_: string;
 }
 

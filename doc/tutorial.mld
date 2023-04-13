@@ -152,7 +152,11 @@ let _ = Template.add_resource
   )
 ]}
 
-and then compile and re-execute (dune exec will rebuild automatically):
+Notice that our lambda function can reference the role directly through
+its attributes - there is no need to use static resource names in your
+template.
+
+Compile and re-execute ([dune exec] will rebuild the code):
 
 {@sh[
 dune exec ./lambdadef.exe
@@ -190,5 +194,44 @@ Once it is deployed, find its name and invoke it directly from the AWS CLI:
 <    "ExecutedVersion": "$LATEST"
 <}
 > cat test_out
+< {"response":"Hello there!"}
 > rm test_out
 ]}
+
+{2 Use a parameter to customise the resources}
+
+Let's use a parameter to provide the name of the environment, and use
+it to generate an [Environment] tag for tracking the resources in the
+stack.
+
+Add the following code after the template object creation:
+
+{@ocaml[
+let environment = Template.add_string_parameter
+  template
+  "Environment"
+  ~default_value: "production"
+  ~allowed_values: ["production"; "staging"; "development"]
+  ()
+]}
+
+Then, for both the role and lambda resource, add the following line to its
+[make_properties] call to register a tag
+
+- Role
+
+  {@ocaml[
+      ~managed_policy_arns: ["arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"]
+      ~tags: [make_tag ~key: "Environment" ~value: environment.ref_ ()]
+      ()
+    )
+  ]}
+
+- Lambda Function
+
+  {@ocaml[
+      ~handler: "index.handler"
+      ~role: hello_world_role.attributes.arn
+      ~tags: [make_tag ~key: "Environment" ~value: environment.ref_ ()]
+      ()
+  ]}
