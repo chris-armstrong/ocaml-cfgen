@@ -7,12 +7,16 @@ end
 
 (** Serialisation helpers*)
 module Serialisers = Util
+
 (** Template generation *)
 module Template = Template
+
 (** Token generation and mapping *)
 module Token_map = Token_map
+
 (** Resource attribute token helpers *)
 module Attributes = Attributes
+
 (** Helpers for AWS domain-specific/embedded languages*)
 module Helpers = struct
   module Iam_policy = Iam_policy

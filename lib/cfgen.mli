@@ -5,12 +5,16 @@
 
 (** Serialisation helpers*)
 module Serialisers = Util
+
 (** Template generation *)
 module Template = Template
+
 (** Token generation and mapping *)
 module Token_map = Token_map
+
 (** Resource attribute token helpers *)
 module Attributes = Attributes
+
 (** Helpers for AWS domain-specific/embedded languages*)
 module Helpers : sig
   module Iam_policy = Iam_policy
@@ -59,6 +63,5 @@ module BaseConstructs : sig
   module Alexa = Cf_alexa
 end
 
-(** Intrinsic references generated at deployment time, like stack name or AWS Account ID/Region,
-    made available as tokens. *)
+(** Intrinsic references generated at deployment time, like stack name or AWS Account ID/Region *)
 module Intrinsics = Intrinsics

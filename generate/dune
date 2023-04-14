@@ -1,4 +1,4 @@
-(executable
- (name write_specs)
- (preprocess (pps ppx_deriving.show))
- (libraries containers yojson parse fmt))
+(library (name generate)
+(inline_tests)
+(libraries fmt containers parse)
+(preprocess (pps ppx_expect)))
