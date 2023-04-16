@@ -15,6 +15,7 @@
  (homepage https://github.com/chris-armstrong/ocaml-cfgen)
  (bug_reports https://github.com/chris-armstrong/ocaml-cfgen/issues)
  (depends
+  (dune (>= "3.4"))
   (ocaml (>= "4.14"))
   yojson
   containers
