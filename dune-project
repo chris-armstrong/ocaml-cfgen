@@ -17,7 +17,7 @@
  (depends
   (dune (>= "3.4"))
   (ocaml (>= "4.14"))
-  yojson
+  (yojson (>= "2.0.0"))
   containers
   fmt
   ppx_deriving
