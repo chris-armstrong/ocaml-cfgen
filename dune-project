@@ -21,7 +21,7 @@
   (ocaml (>= "4.14"))
   (yojson (>= "2.0.0"))
   containers
-  fmt
+  (fmt (>= "0.9.0"))
   ppx_deriving
   ppx_expect
   (odoc :with-doc)))
