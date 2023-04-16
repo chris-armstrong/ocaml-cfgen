@@ -14,6 +14,8 @@
  (maintainers "Chris Armstrong <oss@chrisarmstrong.dev>")
  (homepage https://github.com/chris-armstrong/ocaml-cfgen)
  (bug_reports https://github.com/chris-armstrong/ocaml-cfgen/issues)
+ (source (github chris-armstrong/ocaml-cfgen))
+ (license MIT)
  (depends
   (dune (>= "3.4"))
   (ocaml (>= "4.14"))
