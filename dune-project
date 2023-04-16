@@ -15,6 +15,7 @@
  (homepage https://github.com/chris-armstrong/ocaml-cfgen)
  (bug_reports https://github.com/chris-armstrong/ocaml-cfgen/issues)
  (depends
+  ocaml >= 4.14
   yojson
   containers
   fmt
