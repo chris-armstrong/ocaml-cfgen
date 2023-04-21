@@ -1,4 +1,4 @@
-(lang dune 3.7)
+(lang dune 3.4)
 
 (generate_opam_files true)
 (name cfgen)

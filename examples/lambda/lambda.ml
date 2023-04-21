@@ -39,9 +39,11 @@ let role =
 let _ =
   Template.add_resource template "FunctionX"
     (module Function)
-    (Function.make_properties ~runtime:"nodejs18.x"
+    Function.(make_properties ~runtime:"nodejs18.x"
        ~code:(Function.make_code ~s3_bucket:"bucket" ~s3_key:"my_key/key" ())
-       ~role:role.attributes.arn ())
+       ~role:role.attributes.arn 
+       ~tags:[make_tag ~key:"Environment" ~value:"development" ()]
+       ())
 ;;
 
 Template.add_string_parameter template "TestParameter"
