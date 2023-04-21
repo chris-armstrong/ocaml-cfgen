@@ -6,7 +6,7 @@ let lookupTable = Hashtbl.create 100
 let tokenCounter = ref Int32.one
 let incrementTokenCounter () = tokenCounter := Int32.add !tokenCounter 1l
 let magic = 0xFFBF000000000000L
-let magic_sys_int = if Sys.int_size = 63 then 0x7FBF000000000000 else 0x7FBF0000
+let magic_sys_int = if Sys.int_size = 63 then (Int64.to_int 0x7FBF000000000000L) else 0x7FBF0000
 let max_token = 0x01000000l
 
 let encode_double_token value =
@@ -90,7 +90,9 @@ let lookup_token token =
       | None -> raise (InvalidToken token))
   | None -> None
 
-let scan_token s = Scanf.sscanf_opt s "${Token[%s@.%ld]}" (fun _ token -> token)
+
+let scan_token s = try Some (Scanf.sscanf s "${Token[%s@.%ld]}" (fun _ token -> token))
+with | Scanf.Scan_failure _ -> None
 
 let%expect_test "scan_token" =
   let value = scan_token "${Token[TOKEN.1234]}" |> Option.value ~default:0l in

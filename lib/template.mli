@@ -48,8 +48,11 @@ type parameter_constraints =
 (**
   * The description of a logical resource*)
 type 'attributes logical_resource = {
-  (** The CloudFormation type e.g. [AWS::Lambda::Function] *)
+
   cloudformation_type : string;
+  (** The CloudFormation type e.g. [AWS::Lambda::Function] *)
+
+  attributes : 'attributes;
   (** The resource attributes. These are
       set to token values which can be
       freely assigned to other resource
@@ -57,14 +60,13 @@ type 'attributes logical_resource = {
       serialisation, they will be replaced
       by cross-resource references (such
       as [Ref] or [Fn::GetAtt]) *)
-  attributes : 'attributes;
 }
 
 (**
   A reference to a created parameter *)
 type parameter = {
-  (** A token that resolves to a parameter's value at deployment time. Equivalent of [Ref: "ParameterName"]*)
   ref_: string;
+  (** A token that resolves to a parameter's value at deployment time. Equivalent of [Ref: "ParameterName"]*)
 }
 
 (** A template type - create with {!val:make} *)
@@ -80,17 +82,20 @@ val make : unit -> t
   must conform to this signature.
 *)
 module type ResourceType = sig
-  (** The resource properties type *)
   type properties
-  (** The resource attributes type (can be [unit]) *)
-  type attributes
+  (** The resource properties type *)
 
-  (** Serialise the properties as a [Yojson.Safe.t] type *)
+  type attributes
+  (** The resource attributes type (can be [unit]) *)
+
   val yojson_of_properties : properties -> Yojson.Safe.t
-  (** Create the attributes for a template resource given the specified [logical_id] *)
+  (** Serialise the properties as a [Yojson.Safe.t] type *)
+
   val create_attributes : string -> attributes
-  (** The CloudFormation [Type] field for this resource type e.g. [AWS::Logs::LogGroup] *)
+  (** Create the attributes for a template resource given the specified [logical_id] *)
+
   val cloudformation_type : string
+  (** The CloudFormation [Type] field for this resource type e.g. [AWS::Logs::LogGroup] *)
 end
 
 

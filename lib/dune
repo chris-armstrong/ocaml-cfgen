@@ -237,7 +237,7 @@
   (:jsonfiles
    (glob_files "../definitions/*.json")))
  (action
-  (run ../generate/write_specs.exe %{jsonfiles})))
+  (run ../write_specs/write_specs.exe %{jsonfiles})))
 
 (library (name cfgen)
 (public_name cfgen)
