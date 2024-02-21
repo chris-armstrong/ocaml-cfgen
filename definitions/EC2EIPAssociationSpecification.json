@@ -1,40 +1,39 @@
 {
   "ResourceType": {
     "AWS::EC2::EIPAssociation": {
-      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-eip-association.html",
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-eipassociation.html",
       "Properties": {
-        "AllocationId": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-eip-association.html#cfn-ec2-eipassociation-allocationid",
-          "PrimitiveType": "String",
+        "PrivateIpAddress": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-eipassociation.html#cfn-ec2-eipassociation-privateipaddress",
+          "UpdateType": "Immutable",
           "Required": false,
-          "UpdateType": "Conditional"
-        },
-        "EIP": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-eip-association.html#cfn-ec2-eipassociation-eip",
-          "PrimitiveType": "String",
-          "Required": false,
-          "UpdateType": "Conditional"
+          "PrimitiveType": "String"
         },
         "InstanceId": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-eip-association.html#cfn-ec2-eipassociation-instanceid",
-          "PrimitiveType": "String",
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-eipassociation.html#cfn-ec2-eipassociation-instanceid",
+          "UpdateType": "Immutable",
           "Required": false,
-          "UpdateType": "Conditional"
+          "PrimitiveType": "String"
+        },
+        "AllocationId": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-eipassociation.html#cfn-ec2-eipassociation-allocationid",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "NetworkInterfaceId": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-eip-association.html#cfn-ec2-eipassociation-networkinterfaceid",
-          "PrimitiveType": "String",
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-eipassociation.html#cfn-ec2-eipassociation-networkinterfaceid",
+          "UpdateType": "Immutable",
           "Required": false,
-          "UpdateType": "Conditional"
-        },
-        "PrivateIpAddress": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-eip-association.html#cfn-ec2-eipassociation-PrivateIpAddress",
-          "PrimitiveType": "String",
-          "Required": false,
-          "UpdateType": "Mutable"
+          "PrimitiveType": "String"
+        }
+      },
+      "Attributes": {
+        "Id": {
+          "PrimitiveType": "String"
         }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

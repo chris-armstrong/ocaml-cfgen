@@ -4,16 +4,16 @@
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-userpooluser-attributetype.html",
       "Properties": {
         "Value": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-userpooluser-attributetype.html#cfn-cognito-userpooluser-attributetype-value",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "Name": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cognito-userpooluser-attributetype.html#cfn-cognito-userpooluser-attributetype-name",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
         }
       }
     }
@@ -23,58 +23,62 @@
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html",
       "Properties": {
         "ValidationData": {
-          "Type": "List",
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-validationdata",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
           "ItemType": "AttributeType",
-          "UpdateType": "Immutable"
+          "DuplicatesAllowed": true
         },
         "UserPoolId": {
-          "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-userpoolid",
-          "PrimitiveType": "String",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": true,
+          "PrimitiveType": "String"
         },
         "Username": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-username",
-          "PrimitiveType": "String",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "MessageAction": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-messageaction",
-          "PrimitiveType": "String",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "ClientMetadata": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-clientmetadata",
-          "PrimitiveType": "Json",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "Map",
+          "PrimitiveItemType": "String"
         },
         "DesiredDeliveryMediums": {
-          "PrimitiveItemType": "String",
-          "Type": "List",
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-desireddeliverymediums",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "PrimitiveItemType": "String",
+          "DuplicatesAllowed": true
         },
         "ForceAliasCreation": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-forcealiascreation",
-          "PrimitiveType": "Boolean",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Boolean"
         },
         "UserAttributes": {
-          "Type": "List",
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cognito-userpooluser.html#cfn-cognito-userpooluser-userattributes",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
           "ItemType": "AttributeType",
-          "UpdateType": "Immutable"
+          "DuplicatesAllowed": true
         }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

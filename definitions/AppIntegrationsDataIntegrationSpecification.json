@@ -1,12 +1,31 @@
 {
   "PropertyTypes": {
+    "AWS::AppIntegrations::DataIntegration.FileConfiguration": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appintegrations-dataintegration-fileconfiguration.html",
+      "Properties": {
+        "Filters": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appintegrations-dataintegration-fileconfiguration.html#cfn-appintegrations-dataintegration-fileconfiguration-filters",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "Json"
+        },
+        "Folders": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appintegrations-dataintegration-fileconfiguration.html#cfn-appintegrations-dataintegration-fileconfiguration-folders",
+          "UpdateType": "Mutable",
+          "Required": true,
+          "Type": "List",
+          "PrimitiveItemType": "String",
+          "DuplicatesAllowed": true
+        }
+      }
+    },
     "AWS::AppIntegrations::DataIntegration.ScheduleConfig": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appintegrations-dataintegration-scheduleconfig.html",
       "Properties": {
         "FirstExecutionFrom": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appintegrations-dataintegration-scheduleconfig.html#cfn-appintegrations-dataintegration-scheduleconfig-firstexecutionfrom",
           "UpdateType": "Immutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "String"
         },
         "ScheduleExpression": {
@@ -18,7 +37,7 @@
         "Object": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appintegrations-dataintegration-scheduleconfig.html#cfn-appintegrations-dataintegration-scheduleconfig-object",
           "UpdateType": "Immutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "String"
         }
       }
@@ -48,8 +67,14 @@
         "ScheduleConfig": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appintegrations-dataintegration.html#cfn-appintegrations-dataintegration-scheduleconfig",
           "UpdateType": "Immutable",
-          "Required": true,
+          "Required": false,
           "Type": "ScheduleConfig"
+        },
+        "FileConfiguration": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appintegrations-dataintegration.html#cfn-appintegrations-dataintegration-fileconfiguration",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "FileConfiguration"
         },
         "Description": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appintegrations-dataintegration.html#cfn-appintegrations-dataintegration-description",
@@ -62,6 +87,12 @@
           "UpdateType": "Immutable",
           "Required": true,
           "PrimitiveType": "String"
+        },
+        "ObjectConfiguration": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appintegrations-dataintegration.html#cfn-appintegrations-dataintegration-objectconfiguration",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "Json"
         },
         "KmsKey": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appintegrations-dataintegration.html#cfn-appintegrations-dataintegration-kmskey",
@@ -94,5 +125,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

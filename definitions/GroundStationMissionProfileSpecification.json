@@ -33,12 +33,35 @@
           "PrimitiveType": "String"
         }
       }
+    },
+    "AWS::GroundStation::MissionProfile.StreamsKmsKey": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-groundstation-missionprofile-streamskmskey.html",
+      "Properties": {
+        "KmsKeyArn": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-groundstation-missionprofile-streamskmskey.html#cfn-groundstation-missionprofile-streamskmskey-kmskeyarn",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "KmsAliasArn": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-groundstation-missionprofile-streamskmskey.html#cfn-groundstation-missionprofile-streamskmskey-kmsaliasarn",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        }
+      }
     }
   },
   "ResourceType": {
     "AWS::GroundStation::MissionProfile": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-groundstation-missionprofile.html",
       "Properties": {
+        "StreamsKmsKey": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-groundstation-missionprofile.html#cfn-groundstation-missionprofile-streamskmskey",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "StreamsKmsKey"
+        },
         "ContactPostPassDurationSeconds": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-groundstation-missionprofile.html#cfn-groundstation-missionprofile-contactpostpassdurationseconds",
           "UpdateType": "Mutable",
@@ -58,6 +81,12 @@
           "Type": "List",
           "ItemType": "DataflowEdge",
           "DuplicatesAllowed": true
+        },
+        "StreamsKmsRole": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-groundstation-missionprofile.html#cfn-groundstation-missionprofile-streamskmsrole",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "TrackingConfigArn": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-groundstation-missionprofile.html#cfn-groundstation-missionprofile-trackingconfigarn",
@@ -99,5 +128,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

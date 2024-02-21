@@ -4,16 +4,16 @@
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-mutualtlsauthentication.html",
       "Properties": {
         "TruststoreVersion": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-mutualtlsauthentication.html#cfn-apigatewayv2-domainname-mutualtlsauthentication-truststoreversion",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "TruststoreUri": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-mutualtlsauthentication.html#cfn-apigatewayv2-domainname-mutualtlsauthentication-truststoreuri",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         }
       }
     },
@@ -21,34 +21,34 @@
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-domainnameconfiguration.html",
       "Properties": {
         "OwnershipVerificationCertificateArn": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-domainnameconfiguration.html#cfn-apigatewayv2-domainname-domainnameconfiguration-ownershipverificationcertificatearn",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "SecurityPolicy": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-domainnameconfiguration.html#cfn-apigatewayv2-domainname-domainnameconfiguration-securitypolicy",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "EndpointType": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-domainnameconfiguration.html#cfn-apigatewayv2-domainname-domainnameconfiguration-endpointtype",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "CertificateName": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-domainnameconfiguration.html#cfn-apigatewayv2-domainname-domainnameconfiguration-certificatename",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "CertificateArn": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-apigatewayv2-domainname-domainnameconfiguration.html#cfn-apigatewayv2-domainname-domainnameconfiguration-certificatearn",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         }
       }
     }
@@ -56,6 +56,35 @@
   "ResourceType": {
     "AWS::ApiGatewayV2::DomainName": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html",
+      "Properties": {
+        "MutualTlsAuthentication": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-mutualtlsauthentication",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "MutualTlsAuthentication"
+        },
+        "DomainName": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-domainname",
+          "UpdateType": "Immutable",
+          "Required": true,
+          "PrimitiveType": "String"
+        },
+        "DomainNameConfigurations": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-domainnameconfigurations",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "List",
+          "ItemType": "DomainNameConfiguration",
+          "DuplicatesAllowed": true
+        },
+        "Tags": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-tags",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "Map",
+          "PrimitiveItemType": "String"
+        }
+      },
       "Attributes": {
         "RegionalHostedZoneId": {
           "PrimitiveType": "String"
@@ -63,35 +92,8 @@
         "RegionalDomainName": {
           "PrimitiveType": "String"
         }
-      },
-      "Properties": {
-        "MutualTlsAuthentication": {
-          "Type": "MutualTlsAuthentication",
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-mutualtlsauthentication",
-          "UpdateType": "Mutable"
-        },
-        "DomainName": {
-          "Required": true,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-domainname",
-          "PrimitiveType": "String",
-          "UpdateType": "Immutable"
-        },
-        "DomainNameConfigurations": {
-          "Type": "List",
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-domainnameconfigurations",
-          "ItemType": "DomainNameConfiguration",
-          "UpdateType": "Mutable"
-        },
-        "Tags": {
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-apigatewayv2-domainname.html#cfn-apigatewayv2-domainname-tags",
-          "PrimitiveType": "Json",
-          "UpdateType": "Mutable"
-        }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

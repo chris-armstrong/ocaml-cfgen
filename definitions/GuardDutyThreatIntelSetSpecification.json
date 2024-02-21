@@ -1,19 +1,19 @@
 {
   "PropertyTypes": {
-    "Tag": {
-      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html",
+    "AWS::GuardDuty::ThreatIntelSet.TagItem": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-guardduty-threatintelset-tagitem.html",
       "Properties": {
-        "Key": {
-          "Required": true,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html#cfn-resource-tags-key",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
-        },
         "Value": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-guardduty-threatintelset-tagitem.html#cfn-guardduty-threatintelset-tagitem-value",
+          "UpdateType": "Mutable",
           "Required": true,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html#cfn-resource-tags-value",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "PrimitiveType": "String"
+        },
+        "Key": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-guardduty-threatintelset-tagitem.html#cfn-guardduty-threatintelset-tagitem-key",
+          "UpdateType": "Mutable",
+          "Required": true,
+          "PrimitiveType": "String"
         }
       }
     }
@@ -23,44 +23,50 @@
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-guardduty-threatintelset.html",
       "Properties": {
         "Format": {
-          "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-guardduty-threatintelset.html#cfn-guardduty-threatintelset-format",
-          "PrimitiveType": "String",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": true,
+          "PrimitiveType": "String"
         },
         "Activate": {
-          "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-guardduty-threatintelset.html#cfn-guardduty-threatintelset-activate",
-          "PrimitiveType": "Boolean",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "Boolean"
         },
         "DetectorId": {
-          "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-guardduty-threatintelset.html#cfn-guardduty-threatintelset-detectorid",
-          "PrimitiveType": "String",
-          "UpdateType": "Immutable"
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "Tags": {
-          "Type": "List",
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-guardduty-threatintelset.html#cfn-guardduty-threatintelset-tags",
-          "ItemType": "Tag",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "List",
+          "ItemType": "TagItem",
+          "DuplicatesAllowed": true
         },
         "Name": {
-          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-guardduty-threatintelset.html#cfn-guardduty-threatintelset-name",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         },
         "Location": {
-          "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-guardduty-threatintelset.html#cfn-guardduty-threatintelset-location",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
+          "UpdateType": "Mutable",
+          "Required": true,
+          "PrimitiveType": "String"
+        }
+      },
+      "Attributes": {
+        "Id": {
+          "PrimitiveType": "String"
         }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

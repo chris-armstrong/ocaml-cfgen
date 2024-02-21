@@ -43,20 +43,20 @@
       "Properties": {
         "AppId": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-theme.html#cfn-amplifyuibuilder-theme-appid",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
         },
         "EnvironmentName": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-theme.html#cfn-amplifyuibuilder-theme-environmentname",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
         },
         "Values": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-theme.html#cfn-amplifyuibuilder-theme-values",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "Type": "List",
           "ItemType": "ThemeValues",
           "DuplicatesAllowed": true
@@ -71,7 +71,7 @@
         },
         "Tags": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-theme.html#cfn-amplifyuibuilder-theme-tags",
-          "UpdateType": "Immutable",
+          "UpdateType": "Mutable",
           "Required": false,
           "Type": "Map",
           "PrimitiveItemType": "String"
@@ -79,16 +79,22 @@
         "Name": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-theme.html#cfn-amplifyuibuilder-theme-name",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "String"
         }
       },
       "Attributes": {
+        "ModifiedAt": {
+          "PrimitiveType": "String"
+        },
+        "CreatedAt": {
+          "PrimitiveType": "String"
+        },
         "Id": {
           "PrimitiveType": "String"
         }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

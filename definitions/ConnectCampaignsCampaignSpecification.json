@@ -3,6 +3,12 @@
     "AWS::ConnectCampaigns::Campaign.DialerConfig": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-dialerconfig.html",
       "Properties": {
+        "AgentlessDialerConfig": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-dialerconfig.html#cfn-connectcampaigns-campaign-dialerconfig-agentlessdialerconfig",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "AgentlessDialerConfig"
+        },
         "PredictiveDialerConfig": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-dialerconfig.html#cfn-connectcampaigns-campaign-dialerconfig-predictivedialerconfig",
           "UpdateType": "Mutable",
@@ -20,6 +26,12 @@
     "AWS::ConnectCampaigns::Campaign.ProgressiveDialerConfig": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-progressivedialerconfig.html",
       "Properties": {
+        "DialingCapacity": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-progressivedialerconfig.html#cfn-connectcampaigns-campaign-progressivedialerconfig-dialingcapacity",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "Double"
+        },
         "BandwidthAllocation": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-progressivedialerconfig.html#cfn-connectcampaigns-campaign-progressivedialerconfig-bandwidthallocation",
           "UpdateType": "Mutable",
@@ -31,6 +43,12 @@
     "AWS::ConnectCampaigns::Campaign.PredictiveDialerConfig": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-predictivedialerconfig.html",
       "Properties": {
+        "DialingCapacity": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-predictivedialerconfig.html#cfn-connectcampaigns-campaign-predictivedialerconfig-dialingcapacity",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "Double"
+        },
         "BandwidthAllocation": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-predictivedialerconfig.html#cfn-connectcampaigns-campaign-predictivedialerconfig-bandwidthallocation",
           "UpdateType": "Mutable",
@@ -47,6 +65,17 @@
           "UpdateType": "Mutable",
           "Required": true,
           "PrimitiveType": "Boolean"
+        }
+      }
+    },
+    "AWS::ConnectCampaigns::Campaign.AgentlessDialerConfig": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-agentlessdialerconfig.html",
+      "Properties": {
+        "DialingCapacity": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-agentlessdialerconfig.html#cfn-connectcampaigns-campaign-agentlessdialerconfig-dialingcapacity",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "Double"
         }
       }
     },
@@ -79,7 +108,7 @@
         "ConnectQueueArn": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-connectcampaigns-campaign-outboundcallconfig.html#cfn-connectcampaigns-campaign-outboundcallconfig-connectqueuearn",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "String"
         },
         "AnswerMachineDetectionConfig": {
@@ -141,5 +170,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

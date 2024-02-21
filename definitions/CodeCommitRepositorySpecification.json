@@ -102,6 +102,9 @@
         "CloneUrlHttp": {
           "PrimitiveType": "String"
         },
+        "KmsKeyId": {
+          "PrimitiveType": "String"
+        },
         "CloneUrlSsh": {
           "PrimitiveType": "String"
         },
@@ -113,6 +116,12 @@
         }
       },
       "Properties": {
+        "KmsKeyId": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codecommit-repository.html#cfn-codecommit-repository-kmskeyid",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
         "RepositoryName": {
           "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codecommit-repository.html#cfn-codecommit-repository-repositoryname",
@@ -148,5 +157,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

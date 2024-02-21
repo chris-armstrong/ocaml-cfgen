@@ -46,14 +46,20 @@
         }
       }
     },
-    "AWS::S3ObjectLambda::AccessPoint.PolicyStatus": {
-      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3objectlambda-accesspoint-policystatus.html",
+    "AWS::S3ObjectLambda::AccessPoint.Alias": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3objectlambda-accesspoint-alias.html",
       "Properties": {
-        "IsPublic": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3objectlambda-accesspoint-policystatus.html#cfn-s3objectlambda-accesspoint-policystatus-ispublic",
+        "Status": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3objectlambda-accesspoint-alias.html#cfn-s3objectlambda-accesspoint-alias-status",
           "UpdateType": "Mutable",
           "Required": false,
-          "PrimitiveType": "Boolean"
+          "PrimitiveType": "String"
+        },
+        "Value": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3objectlambda-accesspoint-alias.html#cfn-s3objectlambda-accesspoint-alias-value",
+          "UpdateType": "Mutable",
+          "Required": true,
+          "PrimitiveType": "String"
         }
       }
     },
@@ -148,11 +154,11 @@
         "PublicAccessBlockConfiguration.BlockPublicAcls": {
           "PrimitiveType": "Boolean"
         },
-        "PolicyStatus.IsPublic": {
-          "PrimitiveType": "Boolean"
+        "Alias": {
+          "Type": "Alias"
         },
-        "PolicyStatus": {
-          "Type": "PolicyStatus"
+        "Alias.Value": {
+          "PrimitiveType": "String"
         },
         "PublicAccessBlockConfiguration.IgnorePublicAcls": {
           "PrimitiveType": "Boolean"
@@ -165,9 +171,12 @@
         },
         "Arn": {
           "PrimitiveType": "String"
+        },
+        "Alias.Status": {
+          "PrimitiveType": "String"
         }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

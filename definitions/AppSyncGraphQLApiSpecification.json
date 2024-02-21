@@ -110,6 +110,29 @@
         }
       }
     },
+    "AWS::AppSync::GraphQLApi.EnhancedMetricsConfig": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appsync-graphqlapi-enhancedmetricsconfig.html",
+      "Properties": {
+        "OperationLevelMetricsConfig": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appsync-graphqlapi-enhancedmetricsconfig.html#cfn-appsync-graphqlapi-enhancedmetricsconfig-operationlevelmetricsconfig",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "ResolverLevelMetricsBehavior": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appsync-graphqlapi-enhancedmetricsconfig.html#cfn-appsync-graphqlapi-enhancedmetricsconfig-resolverlevelmetricsbehavior",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "DataSourceLevelMetricsBehavior": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appsync-graphqlapi-enhancedmetricsconfig.html#cfn-appsync-graphqlapi-enhancedmetricsconfig-datasourcelevelmetricsbehavior",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        }
+      }
+    },
     "Tag": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html",
       "Properties": {
@@ -178,7 +201,16 @@
     "AWS::AppSync::GraphQLApi": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html",
       "Attributes": {
+        "RealtimeUrl": {
+          "PrimitiveType": "String"
+        },
         "GraphQLUrl": {
+          "PrimitiveType": "String"
+        },
+        "GraphQLDns": {
+          "PrimitiveType": "String"
+        },
+        "RealtimeDns": {
           "PrimitiveType": "String"
         },
         "Arn": {
@@ -186,13 +218,77 @@
         },
         "ApiId": {
           "PrimitiveType": "String"
+        },
+        "GraphQLEndpointArn": {
+          "PrimitiveType": "String"
         }
       },
       "Properties": {
+        "QueryDepthLimit": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-querydepthlimit",
+          "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
         "OpenIDConnectConfig": {
           "Type": "OpenIDConnectConfig",
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-openidconnectconfig",
+          "UpdateType": "Mutable"
+        },
+        "IntrospectionConfig": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-introspectionconfig",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "MergedApiExecutionRoleArn": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-mergedapiexecutionrolearn",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "EnhancedMetricsConfig": {
+          "Type": "EnhancedMetricsConfig",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-enhancedmetricsconfig",
+          "UpdateType": "Mutable"
+        },
+        "OwnerContact": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-ownercontact",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "ResolverCountLimit": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-resolvercountlimit",
+          "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
+        "Name": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-name",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "AdditionalAuthenticationProviders": {
+          "Type": "List",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-additionalauthenticationproviders",
+          "ItemType": "AdditionalAuthenticationProvider",
+          "UpdateType": "Mutable"
+        },
+        "EnvironmentVariables": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-environmentvariables",
+          "PrimitiveType": "Json",
+          "UpdateType": "Mutable"
+        },
+        "ApiType": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-apitype",
+          "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
         "LambdaAuthorizerConfig": {
@@ -205,6 +301,12 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-xrayenabled",
           "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "Visibility": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-visibility",
+          "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
         "UserPoolConfig": {
@@ -220,12 +322,6 @@
           "ItemType": "Tag",
           "UpdateType": "Mutable"
         },
-        "Name": {
-          "Required": true,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-name",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
-        },
         "AuthenticationType": {
           "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-authenticationtype",
@@ -237,16 +333,9 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-logconfig",
           "UpdateType": "Mutable"
-        },
-        "AdditionalAuthenticationProviders": {
-          "Type": "List",
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-graphqlapi.html#cfn-appsync-graphqlapi-additionalauthenticationproviders",
-          "ItemType": "AdditionalAuthenticationProvider",
-          "UpdateType": "Mutable"
         }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

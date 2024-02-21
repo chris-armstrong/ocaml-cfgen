@@ -33,29 +33,17 @@
     "AWS::EC2::IPAM": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-ipam.html",
       "Properties": {
-        "DefaultResourceDiscoveryAssociationId": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-ipam.html#cfn-ec2-ipam-defaultresourcediscoveryassociationid",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "PrimitiveType": "String"
-        },
-        "DefaultResourceDiscoveryId": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-ipam.html#cfn-ec2-ipam-defaultresourcediscoveryid",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "PrimitiveType": "String"
-        },
         "Description": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-ipam.html#cfn-ec2-ipam-description",
           "UpdateType": "Mutable",
           "Required": false,
           "PrimitiveType": "String"
         },
-        "ResourceDiscoveryAssociationCount": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-ipam.html#cfn-ec2-ipam-resourcediscoveryassociationcount",
+        "Tier": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-ipam.html#cfn-ec2-ipam-tier",
           "UpdateType": "Mutable",
           "Required": false,
-          "PrimitiveType": "Integer"
+          "PrimitiveType": "String"
         },
         "Tags": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-ipam.html#cfn-ec2-ipam-tags",
@@ -75,8 +63,17 @@
         }
       },
       "Attributes": {
+        "DefaultResourceDiscoveryAssociationId": {
+          "PrimitiveType": "String"
+        },
+        "DefaultResourceDiscoveryId": {
+          "PrimitiveType": "String"
+        },
         "IpamId": {
           "PrimitiveType": "String"
+        },
+        "ResourceDiscoveryAssociationCount": {
+          "PrimitiveType": "Integer"
         },
         "ScopeCount": {
           "PrimitiveType": "Integer"
@@ -93,5 +90,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

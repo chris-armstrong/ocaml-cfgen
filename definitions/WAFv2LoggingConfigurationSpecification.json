@@ -1,24 +1,5 @@
 {
   "PropertyTypes": {
-    "AWS::WAFv2::LoggingConfiguration.MatchPattern": {
-      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-matchpattern.html",
-      "Properties": {
-        "All": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-matchpattern.html#cfn-wafv2-loggingconfiguration-matchpattern-all",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "PrimitiveType": "Json"
-        },
-        "IncludedPaths": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-matchpattern.html#cfn-wafv2-loggingconfiguration-matchpattern-includedpaths",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "Type": "List",
-          "PrimitiveItemType": "String",
-          "DuplicatesAllowed": true
-        }
-      }
-    },
     "AWS::WAFv2::LoggingConfiguration.LoggingFilter": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-loggingfilter.html",
       "Properties": {
@@ -91,29 +72,6 @@
         }
       }
     },
-    "AWS::WAFv2::LoggingConfiguration.JsonBody": {
-      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-jsonbody.html",
-      "Properties": {
-        "MatchScope": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-jsonbody.html#cfn-wafv2-loggingconfiguration-jsonbody-matchscope",
-          "UpdateType": "Mutable",
-          "Required": true,
-          "PrimitiveType": "String"
-        },
-        "InvalidFallbackBehavior": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-jsonbody.html#cfn-wafv2-loggingconfiguration-jsonbody-invalidfallbackbehavior",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "PrimitiveType": "String"
-        },
-        "MatchPattern": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-jsonbody.html#cfn-wafv2-loggingconfiguration-jsonbody-matchpattern",
-          "UpdateType": "Mutable",
-          "Required": true,
-          "Type": "MatchPattern"
-        }
-      }
-    },
     "AWS::WAFv2::LoggingConfiguration.ActionCondition": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-actioncondition.html",
       "Properties": {
@@ -128,12 +86,6 @@
     "AWS::WAFv2::LoggingConfiguration.FieldToMatch": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-fieldtomatch.html",
       "Properties": {
-        "JsonBody": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-fieldtomatch.html#cfn-wafv2-loggingconfiguration-fieldtomatch-jsonbody",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "Type": "JsonBody"
-        },
         "QueryString": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-wafv2-loggingconfiguration-fieldtomatch.html#cfn-wafv2-loggingconfiguration-fieldtomatch-querystring",
           "UpdateType": "Mutable",
@@ -212,5 +164,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

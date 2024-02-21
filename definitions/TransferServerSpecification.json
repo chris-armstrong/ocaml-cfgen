@@ -30,9 +30,26 @@
         }
       }
     },
+    "AWS::Transfer::Server.S3StorageOptions": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-transfer-server-s3storageoptions.html",
+      "Properties": {
+        "DirectoryListingOptimization": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-transfer-server-s3storageoptions.html#cfn-transfer-server-s3storageoptions-directorylistingoptimization",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        }
+      }
+    },
     "AWS::Transfer::Server.As2Transport": {
       "Required": false,
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-transfer-server-as2transport.html",
+      "PrimitiveType": "String",
+      "UpdateType": "Mutable"
+    },
+    "AWS::Transfer::Server.StructuredLogDestination": {
+      "Required": false,
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-transfer-server-structuredlogdestination.html",
       "PrimitiveType": "String",
       "UpdateType": "Mutable"
     },
@@ -100,6 +117,12 @@
         "Url": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-transfer-server-identityproviderdetails.html#cfn-transfer-server-identityproviderdetails-url",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "SftpAuthenticationMethods": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-transfer-server-identityproviderdetails.html#cfn-transfer-server-identityproviderdetails-sftpauthenticationmethods",
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         }
@@ -200,6 +223,13 @@
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-transfer-server.html#cfn-transfer-server-endpointdetails",
           "UpdateType": "Mutable"
         },
+        "StructuredLogDestinations": {
+          "Type": "List",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-transfer-server.html#cfn-transfer-server-structuredlogdestinations",
+          "ItemType": "StructuredLogDestination",
+          "UpdateType": "Mutable"
+        },
         "PreAuthenticationLoginBanner": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-transfer-server.html#cfn-transfer-server-preauthenticationloginbanner",
@@ -228,6 +258,12 @@
           "Type": "ProtocolDetails",
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-transfer-server.html#cfn-transfer-server-protocoldetails",
+          "UpdateType": "Mutable"
+        },
+        "S3StorageOptions": {
+          "Type": "S3StorageOptions",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-transfer-server.html#cfn-transfer-server-s3storageoptions",
           "UpdateType": "Mutable"
         },
         "WorkflowDetails": {
@@ -264,5 +300,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

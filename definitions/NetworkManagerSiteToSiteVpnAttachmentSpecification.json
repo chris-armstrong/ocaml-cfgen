@@ -15,7 +15,7 @@
           "Required": false,
           "Type": "List",
           "ItemType": "Tag",
-          "DuplicatesAllowed": true
+          "DuplicatesAllowed": false
         },
         "AttachmentPolicyRuleNumber": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-networkmanager-sitetositevpnattachment-proposedsegmentchange.html#cfn-networkmanager-sitetositevpnattachment-proposedsegmentchange-attachmentpolicyrulenumber",
@@ -47,6 +47,12 @@
     "AWS::NetworkManager::SiteToSiteVpnAttachment": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-networkmanager-sitetositevpnattachment.html",
       "Properties": {
+        "ProposedSegmentChange": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-networkmanager-sitetositevpnattachment.html#cfn-networkmanager-sitetositevpnattachment-proposedsegmentchange",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "ProposedSegmentChange"
+        },
         "CoreNetworkId": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-networkmanager-sitetositevpnattachment.html#cfn-networkmanager-sitetositevpnattachment-corenetworkid",
           "UpdateType": "Immutable",
@@ -65,16 +71,12 @@
           "Required": false,
           "Type": "List",
           "ItemType": "Tag",
-          "DuplicatesAllowed": true
+          "DuplicatesAllowed": false
         }
       },
       "Attributes": {
-        "ProposedSegmentChange": {
-          "Type": "ProposedSegmentChange"
-        },
-        "ProposedSegmentChange.Tags": {
-          "Type": "List",
-          "ItemType": "Tag"
+        "ResourceArn": {
+          "PrimitiveType": "String"
         },
         "AttachmentType": {
           "PrimitiveType": "String"
@@ -82,7 +84,13 @@
         "SegmentName": {
           "PrimitiveType": "String"
         },
+        "State": {
+          "PrimitiveType": "String"
+        },
         "CreatedAt": {
+          "PrimitiveType": "String"
+        },
+        "OwnerAccountId": {
           "PrimitiveType": "String"
         },
         "UpdatedAt": {
@@ -94,21 +102,6 @@
         "CoreNetworkArn": {
           "PrimitiveType": "String"
         },
-        "ResourceArn": {
-          "PrimitiveType": "String"
-        },
-        "ProposedSegmentChange.SegmentName": {
-          "PrimitiveType": "String"
-        },
-        "State": {
-          "PrimitiveType": "String"
-        },
-        "ProposedSegmentChange.AttachmentPolicyRuleNumber": {
-          "PrimitiveType": "Integer"
-        },
-        "OwnerAccountId": {
-          "PrimitiveType": "String"
-        },
         "EdgeLocation": {
           "PrimitiveType": "String"
         },
@@ -118,5 +111,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

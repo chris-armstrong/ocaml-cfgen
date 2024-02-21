@@ -1,40 +1,29 @@
 {
   "PropertyTypes": {
-    "AWS::S3::AccessPoint.PolicyStatus": {
-      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-accesspoint-policystatus.html",
-      "Properties": {
-        "IsPublic": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-accesspoint-policystatus.html#cfn-s3-accesspoint-policystatus-ispublic",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "PrimitiveType": "String"
-        }
-      }
-    },
     "AWS::S3::AccessPoint.PublicAccessBlockConfiguration": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-accesspoint-publicaccessblockconfiguration.html",
       "Properties": {
         "RestrictPublicBuckets": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-accesspoint-publicaccessblockconfiguration.html#cfn-s3-accesspoint-publicaccessblockconfiguration-restrictpublicbuckets",
-          "UpdateType": "Immutable",
+          "UpdateType": "Mutable",
           "Required": false,
           "PrimitiveType": "Boolean"
         },
         "BlockPublicPolicy": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-accesspoint-publicaccessblockconfiguration.html#cfn-s3-accesspoint-publicaccessblockconfiguration-blockpublicpolicy",
-          "UpdateType": "Immutable",
+          "UpdateType": "Mutable",
           "Required": false,
           "PrimitiveType": "Boolean"
         },
         "BlockPublicAcls": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-accesspoint-publicaccessblockconfiguration.html#cfn-s3-accesspoint-publicaccessblockconfiguration-blockpublicacls",
-          "UpdateType": "Immutable",
+          "UpdateType": "Mutable",
           "Required": false,
           "PrimitiveType": "Boolean"
         },
         "IgnorePublicAcls": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-accesspoint-publicaccessblockconfiguration.html#cfn-s3-accesspoint-publicaccessblockconfiguration-ignorepublicacls",
-          "UpdateType": "Immutable",
+          "UpdateType": "Mutable",
           "Required": false,
           "PrimitiveType": "Boolean"
         }
@@ -64,7 +53,7 @@
         },
         "PublicAccessBlockConfiguration": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-s3-accesspoint.html#cfn-s3-accesspoint-publicaccessblockconfiguration",
-          "UpdateType": "Immutable",
+          "UpdateType": "Mutable",
           "Required": false,
           "Type": "PublicAccessBlockConfiguration"
         },
@@ -73,12 +62,6 @@
           "UpdateType": "Immutable",
           "Required": true,
           "PrimitiveType": "String"
-        },
-        "PolicyStatus": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-s3-accesspoint.html#cfn-s3-accesspoint-policystatus",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "Type": "PolicyStatus"
         },
         "BucketAccountId": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-s3-accesspoint.html#cfn-s3-accesspoint-bucketaccountid",
@@ -115,5 +98,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

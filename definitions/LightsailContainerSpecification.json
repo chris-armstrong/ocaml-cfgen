@@ -23,6 +23,23 @@
         }
       }
     },
+    "AWS::Lightsail::Container.EcrImagePullerRole": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-ecrimagepullerrole.html",
+      "Properties": {
+        "PrincipalArn": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-ecrimagepullerrole.html#cfn-lightsail-container-ecrimagepullerrole-principalarn",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "IsActive": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-ecrimagepullerrole.html#cfn-lightsail-container-ecrimagepullerrole-isactive",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "Boolean"
+        }
+      }
+    },
     "AWS::Lightsail::Container.HealthCheckConfig": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-healthcheckconfig.html",
       "Properties": {
@@ -193,6 +210,17 @@
           "PrimitiveType": "String"
         }
       }
+    },
+    "AWS::Lightsail::Container.PrivateRegistryAccess": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-privateregistryaccess.html",
+      "Properties": {
+        "EcrImagePullerRole": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lightsail-container-privateregistryaccess.html#cfn-lightsail-container-privateregistryaccess-ecrimagepullerrole",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "EcrImagePullerRole"
+        }
+      }
     }
   },
   "ResourceType": {
@@ -212,6 +240,12 @@
           "UpdateType": "Immutable",
           "Required": true,
           "PrimitiveType": "String"
+        },
+        "PrivateRegistryAccess": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lightsail-container.html#cfn-lightsail-container-privateregistryaccess",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "PrivateRegistryAccess"
         },
         "ContainerServiceDeployment": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lightsail-container.html#cfn-lightsail-container-containerservicedeployment",
@@ -247,6 +281,12 @@
         }
       },
       "Attributes": {
+        "PrincipalArn": {
+          "PrimitiveType": "String"
+        },
+        "PrivateRegistryAccess.EcrImagePullerRole.PrincipalArn": {
+          "PrimitiveType": "String"
+        },
         "ContainerArn": {
           "PrimitiveType": "String"
         },
@@ -256,5 +296,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

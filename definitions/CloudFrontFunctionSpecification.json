@@ -1,5 +1,16 @@
 {
   "PropertyTypes": {
+    "AWS::CloudFront::Function.KeyValueStoreAssociation": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-function-keyvaluestoreassociation.html",
+      "Properties": {
+        "KeyValueStoreARN": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-function-keyvaluestoreassociation.html#cfn-cloudfront-function-keyvaluestoreassociation-keyvaluestorearn",
+          "UpdateType": "Mutable",
+          "Required": true,
+          "PrimitiveType": "String"
+        }
+      }
+    },
     "AWS::CloudFront::Function.FunctionMetadata": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-function-functionmetadata.html",
       "Properties": {
@@ -25,6 +36,14 @@
           "UpdateType": "Mutable",
           "Required": true,
           "PrimitiveType": "String"
+        },
+        "KeyValueStoreAssociations": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-cloudfront-function-functionconfig.html#cfn-cloudfront-function-functionconfig-keyvaluestoreassociations",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "List",
+          "ItemType": "KeyValueStoreAssociation",
+          "DuplicatesAllowed": false
         }
       }
     }
@@ -77,5 +96,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

@@ -34,13 +34,13 @@
       "Properties": {
         "FailureType": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iot-jobtemplate-retrycriteria.html#cfn-iot-jobtemplate-retrycriteria-failuretype",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
         },
         "NumberOfRetries": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iot-jobtemplate-retrycriteria.html#cfn-iot-jobtemplate-retrycriteria-numberofretries",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "Integer"
         }
@@ -85,13 +85,13 @@
       "Properties": {
         "DurationInMinutes": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iot-jobtemplate-maintenancewindow.html#cfn-iot-jobtemplate-maintenancewindow-durationinminutes",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "Integer"
         },
         "StartTime": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iot-jobtemplate-maintenancewindow.html#cfn-iot-jobtemplate-maintenancewindow-starttime",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
         }
@@ -166,7 +166,7 @@
       "Properties": {
         "RetryCriteriaList": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iot-jobtemplate-jobexecutionsretryconfig.html#cfn-iot-jobtemplate-jobexecutionsretryconfig-retrycriterialist",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "Type": "List",
           "ItemType": "RetryCriteria",
@@ -196,23 +196,11 @@
     "AWS::IoT::JobTemplate": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html",
       "Properties": {
-        "JobArn": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-jobarn",
-          "UpdateType": "Immutable",
-          "Required": false,
-          "PrimitiveType": "String"
-        },
         "TimeoutConfig": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-timeoutconfig",
           "UpdateType": "Immutable",
           "Required": false,
           "Type": "TimeoutConfig"
-        },
-        "JobExecutionsRolloutConfig": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-jobexecutionsrolloutconfig",
-          "UpdateType": "Immutable",
-          "Required": false,
-          "Type": "JobExecutionsRolloutConfig"
         },
         "Description": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-description",
@@ -222,29 +210,15 @@
         },
         "JobExecutionsRetryConfig": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-jobexecutionsretryconfig",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "Type": "JobExecutionsRetryConfig"
-        },
-        "DocumentSource": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-documentsource",
           "UpdateType": "Immutable",
           "Required": false,
-          "PrimitiveType": "String"
+          "Type": "JobExecutionsRetryConfig"
         },
         "AbortConfig": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-abortconfig",
           "UpdateType": "Immutable",
           "Required": false,
           "Type": "AbortConfig"
-        },
-        "MaintenanceWindows": {
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-maintenancewindows",
-          "UpdateType": "Mutable",
-          "Required": false,
-          "Type": "List",
-          "ItemType": "MaintenanceWindow",
-          "DuplicatesAllowed": true
         },
         "JobTemplateId": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-jobtemplateid",
@@ -257,6 +231,40 @@
           "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
+        },
+        "DestinationPackageVersions": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-destinationpackageversions",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "PrimitiveItemType": "String",
+          "DuplicatesAllowed": true
+        },
+        "JobArn": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-jobarn",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "JobExecutionsRolloutConfig": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-jobexecutionsrolloutconfig",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "JobExecutionsRolloutConfig"
+        },
+        "DocumentSource": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-documentsource",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "MaintenanceWindows": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-maintenancewindows",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "List",
+          "ItemType": "MaintenanceWindow",
+          "DuplicatesAllowed": true
         },
         "PresignedUrlConfig": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iot-jobtemplate.html#cfn-iot-jobtemplate-presignedurlconfig",
@@ -280,5 +288,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

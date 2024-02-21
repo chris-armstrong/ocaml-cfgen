@@ -5,13 +5,13 @@
       "Properties": {
         "BucketName": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-simspaceweaver-simulation-s3location.html#cfn-simspaceweaver-simulation-s3location-bucketname",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": true,
           "PrimitiveType": "String"
         },
         "ObjectKey": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-simspaceweaver-simulation-s3location.html#cfn-simspaceweaver-simulation-s3location-objectkey",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": true,
           "PrimitiveType": "String"
         }
@@ -24,20 +24,32 @@
       "Properties": {
         "SchemaS3Location": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-simspaceweaver-simulation.html#cfn-simspaceweaver-simulation-schemas3location",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "Type": "S3Location"
         },
+        "SnapshotS3Location": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-simspaceweaver-simulation.html#cfn-simspaceweaver-simulation-snapshots3location",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "S3Location"
+        },
+        "MaximumDuration": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-simspaceweaver-simulation.html#cfn-simspaceweaver-simulation-maximumduration",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
         "RoleArn": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-simspaceweaver-simulation.html#cfn-simspaceweaver-simulation-rolearn",
-          "UpdateType": "Mutable",
-          "Required": false,
+          "UpdateType": "Immutable",
+          "Required": true,
           "PrimitiveType": "String"
         },
         "Name": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-simspaceweaver-simulation.html#cfn-simspaceweaver-simulation-name",
           "UpdateType": "Immutable",
-          "Required": false,
+          "Required": true,
           "PrimitiveType": "String"
         }
       },
@@ -48,5 +60,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

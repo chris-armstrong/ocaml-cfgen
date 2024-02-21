@@ -60,6 +60,17 @@
         }
       }
     },
+    "AWS::AccessAnalyzer::Analyzer.AnalyzerConfiguration": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-accessanalyzer-analyzer-analyzerconfiguration.html",
+      "Properties": {
+        "UnusedAccessConfiguration": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-accessanalyzer-analyzer-analyzerconfiguration.html#cfn-accessanalyzer-analyzer-analyzerconfiguration-unusedaccessconfiguration",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "UnusedAccessConfiguration"
+        }
+      }
+    },
     "Tag": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-resource-tags.html",
       "Properties": {
@@ -74,6 +85,17 @@
           "UpdateType": "Mutable",
           "Required": true,
           "PrimitiveType": "String"
+        }
+      }
+    },
+    "AWS::AccessAnalyzer::Analyzer.UnusedAccessConfiguration": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-accessanalyzer-analyzer-unusedaccessconfiguration.html",
+      "Properties": {
+        "UnusedAccessAge": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-accessanalyzer-analyzer-unusedaccessconfiguration.html#cfn-accessanalyzer-analyzer-unusedaccessconfiguration-unusedaccessage",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "Integer"
         }
       }
     }
@@ -109,6 +131,12 @@
           "Type": "List",
           "ItemType": "Tag",
           "DuplicatesAllowed": false
+        },
+        "AnalyzerConfiguration": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-accessanalyzer-analyzer.html#cfn-accessanalyzer-analyzer-analyzerconfiguration",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "AnalyzerConfiguration"
         }
       },
       "Attributes": {
@@ -118,5 +146,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

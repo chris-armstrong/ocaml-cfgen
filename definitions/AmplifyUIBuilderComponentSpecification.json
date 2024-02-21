@@ -119,6 +119,12 @@
           "Type": "Map",
           "ItemType": "ComponentEvent"
         },
+        "SourceId": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplifyuibuilder-component-componentchild.html#cfn-amplifyuibuilder-component-componentchild-sourceid",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
         "Children": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplifyuibuilder-component-componentchild.html#cfn-amplifyuibuilder-component-componentchild-children",
           "UpdateType": "Mutable",
@@ -316,6 +322,12 @@
           "ItemType": "Predicate",
           "DuplicatesAllowed": true
         },
+        "SlotName": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplifyuibuilder-component-componentbindingpropertiesvalueproperties.html#cfn-amplifyuibuilder-component-componentbindingpropertiesvalueproperties-slotname",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
         "Key": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplifyuibuilder-component-componentbindingpropertiesvalueproperties.html#cfn-amplifyuibuilder-component-componentbindingpropertiesvalueproperties-key",
           "UpdateType": "Mutable",
@@ -378,6 +390,12 @@
           "UpdateType": "Mutable",
           "Required": false,
           "Type": "ActionParameters"
+        },
+        "BindingEvent": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplifyuibuilder-component-componentevent.html#cfn-amplifyuibuilder-component-componentevent-bindingevent",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
         }
       }
     },
@@ -414,6 +432,12 @@
         },
         "Operand": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplifyuibuilder-component-predicate.html#cfn-amplifyuibuilder-component-predicate-operand",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
+        "OperandType": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-amplifyuibuilder-component-predicate.html#cfn-amplifyuibuilder-component-predicate-operandtype",
           "UpdateType": "Mutable",
           "Required": false,
           "PrimitiveType": "String"
@@ -505,7 +529,7 @@
         "ComponentType": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-componenttype",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "String"
         },
         "SchemaVersion": {
@@ -516,14 +540,14 @@
         },
         "EnvironmentName": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-environmentname",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
         },
         "BindingProperties": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-bindingproperties",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "Type": "Map",
           "ItemType": "ComponentBindingPropertiesValue"
         },
@@ -536,7 +560,7 @@
         "Properties": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-properties",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "Type": "Map",
           "ItemType": "ComponentProperty"
         },
@@ -550,20 +574,20 @@
         "Name": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-name",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "String"
         },
         "Variants": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-variants",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "Type": "List",
           "ItemType": "ComponentVariant",
           "DuplicatesAllowed": true
         },
         "AppId": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-appid",
-          "UpdateType": "Mutable",
+          "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
         },
@@ -577,7 +601,7 @@
         "Overrides": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-overrides",
           "UpdateType": "Mutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "Json"
         },
         "Children": {
@@ -590,18 +614,24 @@
         },
         "Tags": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-amplifyuibuilder-component.html#cfn-amplifyuibuilder-component-tags",
-          "UpdateType": "Immutable",
+          "UpdateType": "Mutable",
           "Required": false,
           "Type": "Map",
           "PrimitiveItemType": "String"
         }
       },
       "Attributes": {
+        "ModifiedAt": {
+          "PrimitiveType": "String"
+        },
+        "CreatedAt": {
+          "PrimitiveType": "String"
+        },
         "Id": {
           "PrimitiveType": "String"
         }
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

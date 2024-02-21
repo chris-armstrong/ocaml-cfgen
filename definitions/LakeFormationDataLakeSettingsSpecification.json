@@ -7,26 +7,114 @@
       "ItemType": "DataLakePrincipal",
       "UpdateType": "Mutable"
     },
+    "AWS::LakeFormation::DataLakeSettings.PrincipalPermissions": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-principalpermissions.html",
+      "Properties": {
+        "Permissions": {
+          "PrimitiveItemType": "String",
+          "Type": "List",
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-principalpermissions.html#cfn-lakeformation-datalakesettings-principalpermissions-permissions",
+          "UpdateType": "Mutable"
+        },
+        "Principal": {
+          "Type": "DataLakePrincipal",
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-principalpermissions.html#cfn-lakeformation-datalakesettings-principalpermissions-principal",
+          "UpdateType": "Mutable"
+        }
+      }
+    },
+    "AWS::LakeFormation::DataLakeSettings.CreateTableDefaultPermissions": {
+      "Type": "List",
+      "Required": false,
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-createtabledefaultpermissions.html",
+      "ItemType": "PrincipalPermissions",
+      "UpdateType": "Mutable"
+    },
     "AWS::LakeFormation::DataLakeSettings.DataLakePrincipal": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-datalakeprincipal.html",
       "Properties": {
         "DataLakePrincipalIdentifier": {
-          "Required": false,
+          "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-datalakeprincipal.html#cfn-lakeformation-datalakesettings-datalakeprincipal-datalakeprincipalidentifier",
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         }
       }
+    },
+    "AWS::LakeFormation::DataLakeSettings.ExternalDataFilteringAllowList": {
+      "Type": "List",
+      "Required": false,
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-externaldatafilteringallowlist.html",
+      "ItemType": "DataLakePrincipal",
+      "UpdateType": "Mutable"
+    },
+    "AWS::LakeFormation::DataLakeSettings.CreateDatabaseDefaultPermissions": {
+      "Type": "List",
+      "Required": false,
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lakeformation-datalakesettings-createdatabasedefaultpermissions.html",
+      "ItemType": "PrincipalPermissions",
+      "UpdateType": "Mutable"
     }
   },
   "ResourceType": {
     "AWS::LakeFormation::DataLakeSettings": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html",
       "Properties": {
+        "AllowExternalDataFiltering": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-allowexternaldatafiltering",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "ExternalDataFilteringAllowList": {
+          "Type": "ExternalDataFilteringAllowList",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-externaldatafilteringallowlist",
+          "UpdateType": "Mutable"
+        },
+        "CreateTableDefaultPermissions": {
+          "Type": "CreateTableDefaultPermissions",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-createtabledefaultpermissions",
+          "UpdateType": "Mutable"
+        },
+        "MutationType": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-mutationtype",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "Parameters": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-parameters",
+          "PrimitiveType": "Json",
+          "UpdateType": "Mutable"
+        },
+        "AllowFullTableExternalDataAccess": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-allowfulltableexternaldataaccess",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
         "Admins": {
           "Type": "Admins",
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-admins",
+          "UpdateType": "Mutable"
+        },
+        "CreateDatabaseDefaultPermissions": {
+          "Type": "CreateDatabaseDefaultPermissions",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-createdatabasedefaultpermissions",
+          "UpdateType": "Mutable"
+        },
+        "AuthorizedSessionTagValueList": {
+          "PrimitiveItemType": "String",
+          "Type": "List",
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-lakeformation-datalakesettings.html#cfn-lakeformation-datalakesettings-authorizedsessiontagvaluelist",
           "UpdateType": "Mutable"
         },
         "TrustedResourceOwners": {
@@ -39,5 +127,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

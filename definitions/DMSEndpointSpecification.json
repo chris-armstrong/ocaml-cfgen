@@ -292,9 +292,27 @@
     "AWS::DMS::Endpoint.IbmDb2Settings": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-ibmdb2settings.html",
       "Properties": {
+        "LoadTimeout": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-ibmdb2settings.html#cfn-dms-endpoint-ibmdb2settings-loadtimeout",
+          "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
         "SetDataCaptureChanges": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-ibmdb2settings.html#cfn-dms-endpoint-ibmdb2settings-setdatacapturechanges",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "MaxFileSize": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-ibmdb2settings.html#cfn-dms-endpoint-ibmdb2settings-maxfilesize",
+          "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
+        "KeepCsvFiles": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-ibmdb2settings.html#cfn-dms-endpoint-ibmdb2settings-keepcsvfiles",
           "PrimitiveType": "Boolean",
           "UpdateType": "Mutable"
         },
@@ -314,6 +332,12 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-ibmdb2settings.html#cfn-dms-endpoint-ibmdb2settings-secretsmanagersecretid",
           "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "WriteBufferSize": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-ibmdb2settings.html#cfn-dms-endpoint-ibmdb2settings-writebuffersize",
+          "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
         "SecretsManagerAccessRoleArn": {
@@ -549,16 +573,22 @@
           "PrimitiveType": "Boolean",
           "UpdateType": "Mutable"
         },
+        "TlogAccessMode": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-tlogaccessmode",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
         "BcpPacketSize": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-bcppacketsize",
           "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
-        "QuerySingleAlwaysOnNode": {
+        "Port": {
           "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-querysinglealwaysonnode",
-          "PrimitiveType": "Boolean",
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-port",
+          "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
         "SafeguardPolicy": {
@@ -573,6 +603,36 @@
           "PrimitiveType": "Boolean",
           "UpdateType": "Mutable"
         },
+        "DatabaseName": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-databasename",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "UseBcpFullLoad": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-usebcpfullload",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "Username": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-username",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "QuerySingleAlwaysOnNode": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-querysinglealwaysonnode",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "ServerName": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-servername",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
         "SecretsManagerSecretId": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-secretsmanagersecretid",
@@ -585,16 +645,28 @@
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
+        "ForceLobLookup": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-forceloblookup",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
         "SecretsManagerAccessRoleArn": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-secretsmanageraccessrolearn",
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
-        "UseBcpFullLoad": {
+        "TrimSpaceInChar": {
           "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-usebcpfullload",
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-trimspaceinchar",
           "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "Password": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-microsoftsqlserversettings.html#cfn-dms-endpoint-microsoftsqlserversettings-password",
+          "PrimitiveType": "String",
           "UpdateType": "Mutable"
         }
       }
@@ -620,16 +692,16 @@
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
-        "IncludeOpForFullLoad": {
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-includeopforfullload",
-          "PrimitiveType": "Boolean",
-          "UpdateType": "Mutable"
-        },
         "CsvNullValue": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-csvnullvalue",
           "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "IncludeOpForFullLoad": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-includeopforfullload",
+          "PrimitiveType": "Boolean",
           "UpdateType": "Mutable"
         },
         "CdcInsertsAndUpdates": {
@@ -656,6 +728,12 @@
           "PrimitiveType": "Boolean",
           "UpdateType": "Mutable"
         },
+        "GlueCatalogGeneration": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-gluecataloggeneration",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
         "DataFormat": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-dataformat",
@@ -666,6 +744,12 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-csvdelimiter",
           "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "AddTrailingPaddingCharacter": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-addtrailingpaddingcharacter",
+          "PrimitiveType": "Boolean",
           "UpdateType": "Mutable"
         },
         "IgnoreHeaderRows": {
@@ -722,12 +806,6 @@
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
-        "ParquetVersion": {
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-parquetversion",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
-        },
         "AddColumnName": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-addcolumnname",
@@ -738,6 +816,12 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-cdcminfilesize",
           "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
+        "ParquetVersion": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-parquetversion",
+          "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
         "ExternalTableDefinition": {
@@ -758,16 +842,22 @@
           "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
+        "CdcPath": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-cdcpath",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
         "CsvNoSupValue": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-csvnosupvalue",
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
-        "CdcPath": {
+        "CdcMaxBatchInterval": {
           "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-cdcpath",
-          "PrimitiveType": "String",
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-cdcmaxbatchinterval",
+          "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
         "CsvRowDelimiter": {
@@ -782,21 +872,9 @@
           "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
-        "CdcMaxBatchInterval": {
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-cdcmaxbatchinterval",
-          "PrimitiveType": "Integer",
-          "UpdateType": "Mutable"
-        },
         "DataPageSize": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-datapagesize",
-          "PrimitiveType": "Integer",
-          "UpdateType": "Mutable"
-        },
-        "DictPageSizeLimit": {
-          "Required": false,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-dictpagesizelimit",
           "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
@@ -804,6 +882,12 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-datepartitionenabled",
           "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "DictPageSizeLimit": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-dictpagesizelimit",
+          "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         },
         "CompressionType": {
@@ -822,6 +906,12 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-cdcinsertsonly",
           "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "ExpectedBucketOwner": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-s3settings.html#cfn-dms-endpoint-s3settings-expectedbucketowner",
+          "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
         "EncryptionMode": {
@@ -900,6 +990,12 @@
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
+        "MapBooleanAsBoolean": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-postgresqlsettings.html#cfn-dms-endpoint-postgresqlsettings-mapbooleanasboolean",
+          "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
         "AfterConnectScript": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-postgresqlsettings.html#cfn-dms-endpoint-postgresqlsettings-afterconnectscript",
@@ -928,6 +1024,18 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-postgresqlsettings.html#cfn-dms-endpoint-postgresqlsettings-heartbeatenable",
           "PrimitiveType": "Boolean",
+          "UpdateType": "Mutable"
+        },
+        "BabelfishDatabaseName": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-postgresqlsettings.html#cfn-dms-endpoint-postgresqlsettings-babelfishdatabasename",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "DatabaseMode": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-postgresqlsettings.html#cfn-dms-endpoint-postgresqlsettings-databasemode",
+          "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
         "CaptureDdls": {
@@ -1141,6 +1249,12 @@
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-redshiftsettings.html#cfn-dms-endpoint-redshiftsettings-connectiontimeout",
           "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
+        "MapBooleanAsBoolean": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-dms-endpoint-redshiftsettings.html#cfn-dms-endpoint-redshiftsettings-mapbooleanasboolean",
+          "PrimitiveType": "Boolean",
           "UpdateType": "Mutable"
         },
         "AfterConnectScript": {
@@ -1587,5 +1701,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

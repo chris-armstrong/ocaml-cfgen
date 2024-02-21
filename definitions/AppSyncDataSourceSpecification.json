@@ -230,12 +230,6 @@
         }
       },
       "Properties": {
-        "Type": {
-          "Required": true,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-datasource.html#cfn-appsync-datasource-type",
-          "PrimitiveType": "String",
-          "UpdateType": "Mutable"
-        },
         "OpenSearchServiceConfig": {
           "Type": "OpenSearchServiceConfig",
           "Required": false,
@@ -251,6 +245,24 @@
         "ServiceRoleArn": {
           "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-datasource.html#cfn-appsync-datasource-servicerolearn",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "MetricsConfig": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-datasource.html#cfn-appsync-datasource-metricsconfig",
+          "PrimitiveType": "String",
+          "UpdateType": "Mutable"
+        },
+        "Name": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-datasource.html#cfn-appsync-datasource-name",
+          "PrimitiveType": "String",
+          "UpdateType": "Immutable"
+        },
+        "Type": {
+          "Required": true,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-datasource.html#cfn-appsync-datasource-type",
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
@@ -284,12 +296,6 @@
           "PrimitiveType": "String",
           "UpdateType": "Immutable"
         },
-        "Name": {
-          "Required": true,
-          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appsync-datasource.html#cfn-appsync-datasource-name",
-          "PrimitiveType": "String",
-          "UpdateType": "Immutable"
-        },
         "DynamoDBConfig": {
           "Type": "DynamoDBConfig",
           "Required": false,
@@ -305,5 +311,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

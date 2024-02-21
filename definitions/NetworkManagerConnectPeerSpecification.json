@@ -113,6 +113,12 @@
           "Required": true,
           "PrimitiveType": "String"
         },
+        "SubnetArn": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-networkmanager-connectpeer.html#cfn-networkmanager-connectpeer-subnetarn",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
         "CoreNetworkAddress": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-networkmanager-connectpeer.html#cfn-networkmanager-connectpeer-corenetworkaddress",
           "UpdateType": "Immutable",
@@ -128,7 +134,7 @@
         "InsideCidrBlocks": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-networkmanager-connectpeer.html#cfn-networkmanager-connectpeer-insidecidrblocks",
           "UpdateType": "Immutable",
-          "Required": true,
+          "Required": false,
           "Type": "List",
           "PrimitiveItemType": "String",
           "DuplicatesAllowed": true
@@ -139,7 +145,7 @@
           "Required": false,
           "Type": "List",
           "ItemType": "Tag",
-          "DuplicatesAllowed": true
+          "DuplicatesAllowed": false
         }
       },
       "Attributes": {
@@ -181,5 +187,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

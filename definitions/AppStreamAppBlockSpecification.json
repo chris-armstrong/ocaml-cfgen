@@ -58,7 +58,7 @@
         "S3Key": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appstream-appblock-s3location.html#cfn-appstream-appblock-s3location-s3key",
           "UpdateType": "Immutable",
-          "Required": true,
+          "Required": false,
           "PrimitiveType": "String"
         }
       }
@@ -71,7 +71,7 @@
         "SetupScriptDetails": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appstream-appblock.html#cfn-appstream-appblock-setupscriptdetails",
           "UpdateType": "Immutable",
-          "Required": true,
+          "Required": false,
           "Type": "ScriptDetails"
         },
         "Description": {
@@ -79,6 +79,12 @@
           "UpdateType": "Immutable",
           "Required": false,
           "PrimitiveType": "String"
+        },
+        "PostSetupScriptDetails": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appstream-appblock.html#cfn-appstream-appblock-postsetupscriptdetails",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "Type": "ScriptDetails"
         },
         "DisplayName": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appstream-appblock.html#cfn-appstream-appblock-displayname",
@@ -100,6 +106,12 @@
           "ItemType": "Tag",
           "DuplicatesAllowed": false
         },
+        "PackagingType": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appstream-appblock.html#cfn-appstream-appblock-packagingtype",
+          "UpdateType": "Immutable",
+          "Required": false,
+          "PrimitiveType": "String"
+        },
         "Name": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appstream-appblock.html#cfn-appstream-appblock-name",
           "UpdateType": "Immutable",
@@ -117,5 +129,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

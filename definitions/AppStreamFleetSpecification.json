@@ -21,8 +21,14 @@
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appstream-fleet-computecapacity.html",
       "Properties": {
         "DesiredInstances": {
-          "Required": true,
+          "Required": false,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appstream-fleet-computecapacity.html#cfn-appstream-fleet-computecapacity-desiredinstances",
+          "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
+        "DesiredSessions": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-appstream-fleet-computecapacity.html#cfn-appstream-fleet-computecapacity-desiredsessions",
           "PrimitiveType": "Integer",
           "UpdateType": "Mutable"
         }
@@ -189,6 +195,12 @@
           "PrimitiveType": "String",
           "UpdateType": "Mutable"
         },
+        "MaxSessionsPerInstance": {
+          "Required": false,
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appstream-fleet.html#cfn-appstream-fleet-maxsessionsperinstance",
+          "PrimitiveType": "Integer",
+          "UpdateType": "Mutable"
+        },
         "InstanceType": {
           "Required": true,
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-appstream-fleet.html#cfn-appstream-fleet-instancetype",
@@ -217,5 +229,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }

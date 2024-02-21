@@ -23,6 +23,27 @@
         }
       }
     },
+    "AWS::S3::StorageLens.StorageLensGroupSelectionCriteria": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-storagelensgroupselectioncriteria.html",
+      "Properties": {
+        "Exclude": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-storagelensgroupselectioncriteria.html#cfn-s3-storagelens-storagelensgroupselectioncriteria-exclude",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "List",
+          "PrimitiveItemType": "String",
+          "DuplicatesAllowed": false
+        },
+        "Include": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-storagelensgroupselectioncriteria.html#cfn-s3-storagelens-storagelensgroupselectioncriteria-include",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "List",
+          "PrimitiveItemType": "String",
+          "DuplicatesAllowed": false
+        }
+      }
+    },
     "AWS::S3::StorageLens.DataExport": {
       "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-dataexport.html",
       "Properties": {
@@ -37,6 +58,17 @@
           "UpdateType": "Mutable",
           "Required": false,
           "Type": "CloudWatchMetrics"
+        }
+      }
+    },
+    "AWS::S3::StorageLens.StorageLensGroupLevel": {
+      "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-storagelensgrouplevel.html",
+      "Properties": {
+        "StorageLensGroupSelectionCriteria": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-storagelensgrouplevel.html#cfn-s3-storagelens-storagelensgrouplevel-storagelensgroupselectioncriteria",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "StorageLensGroupSelectionCriteria"
         }
       }
     },
@@ -93,6 +125,12 @@
           "UpdateType": "Mutable",
           "Required": false,
           "Type": "AdvancedDataProtectionMetrics"
+        },
+        "StorageLensGroupLevel": {
+          "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-accountlevel.html#cfn-s3-storagelens-accountlevel-storagelensgrouplevel",
+          "UpdateType": "Mutable",
+          "Required": false,
+          "Type": "StorageLensGroupLevel"
         },
         "ActivityMetrics": {
           "Documentation": "http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-s3-storagelens-accountlevel.html#cfn-s3-storagelens-accountlevel-activitymetrics",
@@ -391,5 +429,5 @@
       }
     }
   },
-  "ResourceSpecificationVersion": "116.0.0"
+  "ResourceSpecificationVersion": "161.0.0"
 }
