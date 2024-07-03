@@ -1,4 +1,13 @@
 (executable
  (name write_specs)
- (preprocess (pps ppx_deriving.show ppx_expect) )
- (libraries containers yojson parse fmt generate))
+ (modules write_specs)
+ (preprocess
+  (pps ppx_deriving.show ppx_expect))
+ (libraries specs containers yojson parse fmt generate))
+
+(executable
+ (name write_defs)
+ (modules write_defs)
+ (preprocess
+  (pps ppx_deriving.show ppx_expect))
+ (libraries specs containers yojson parse fmt generate))

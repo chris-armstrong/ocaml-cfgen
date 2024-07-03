@@ -18,25 +18,24 @@
     the [Yojson.Safe.pretty_to_string] function.
     *)
 
-(**
-  * The constraints on a string parameter
-  *)
 type parameter_string_constraints = {
   default_value : string option;
   min_length : int option;
-  max_length : int option;
-  (** The set of allowed values for this parameter *)
+  max_length : int option;  (** The set of allowed values for this parameter *)
   allowed_values : string list option;
   allowed_pattern : string option;
 }
-
 (**
-  * The constraints on a number (int or float) parameter *)
+  * The constraints on a string parameter
+  *)
+
 type 'a parameter_number_constraints = {
   default_value : 'a option;
   min_value : 'a option;
   max_value : 'a option;
 }
+(**
+  * The constraints on a number (int or float) parameter *)
 
 (**
   * The constraints on a stack parameter *)
@@ -45,15 +44,11 @@ type parameter_constraints =
   | ParameterInteger of int parameter_number_constraints
   | ParameterFloat of float parameter_number_constraints
 
-(**
-  * The description of a logical resource*)
 type 'attributes logical_resource = {
-
   cloudformation_type : string;
-  (** The CloudFormation type e.g. [AWS::Lambda::Function] *)
-
+      (** The CloudFormation type e.g. [AWS::Lambda::Function] *)
   attributes : 'attributes;
-  (** The resource attributes. These are
+      (** The resource attributes. These are
       set to token values which can be
       freely assigned to other resource
       properties or outputs. At stack
@@ -61,19 +56,21 @@ type 'attributes logical_resource = {
       by cross-resource references (such
       as [Ref] or [Fn::GetAtt]) *)
 }
+(**
+  * The description of a logical resource*)
 
+type parameter = {
+  ref_ : string;
+      (** A token that resolves to a parameter's value at deployment time. Equivalent of [Ref: "ParameterName"]*)
+}
 (**
   A reference to a created parameter *)
-type parameter = {
-  ref_: string;
-  (** A token that resolves to a parameter's value at deployment time. Equivalent of [Ref: "ParameterName"]*)
-}
 
-(** A template type - create with {!val:make} *)
 type t
+(** A template type - create with {!val:make} *)
 
-(** Create a new template representation *)
 val make : unit -> t
+(** Create a new template representation *)
 
 (**
   The module interface for a stack resource
@@ -98,7 +95,12 @@ module type ResourceType = sig
   (** The CloudFormation [Type] field for this resource type e.g. [AWS::Logs::LogGroup] *)
 end
 
-
+val add_resource :
+  t ->
+  string ->
+  (module ResourceType with type attributes = 'a and type properties = 'p) ->
+  'p ->
+  t * 'a logical_resource
 (**
   Add a new resource to the template
 
@@ -111,13 +113,15 @@ end
   - [(module Resource)] is the resource module e.g. [(module AWS.IAM.Role)]
   - [properties] is the resource properties object
   *)
-val add_resource :
+
+val add_parameter :
   t ->
   string ->
-  (module ResourceType with type attributes = 'a and type properties = 'p) ->
-  'p ->
-  'a logical_resource
-
+  parameter_constraints ->
+  ?description:string ->
+  ?no_echo:bool ->
+  unit ->
+  t * parameter
 (**
   Add a new parameter to the template
 
@@ -138,15 +142,19 @@ val add_resource :
     (not to be used for secrets, as they can still be recovered if exposed as outputs or resource
       properties)
   *)
-val add_parameter :
+
+val add_string_parameter :
   t ->
   string ->
-  parameter_constraints ->
   ?description:string ->
   ?no_echo:bool ->
+  ?min_length:int ->
+  ?max_length:int ->
+  ?allowed_values:string list ->
+  ?allowed_pattern:string ->
+  ?default_value:string ->
   unit ->
-  parameter
-
+  t * parameter
 (**
   Add a new string parameter to the template.
 
@@ -181,19 +189,15 @@ val add_parameter :
   - [?allowed_pattern] constrain the allowed values to the pattern (see {{:https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-regexes.html}AWS documentation} on regexes in CloudFormation)
   - [?default_value] is the default value used if the parameter is not specified when first deploying the template
   *)
-val add_string_parameter :
+
+val add_output :
   t ->
   string ->
+  string ->
+  ?export:string ->
   ?description:string ->
-  ?no_echo:bool ->
-  ?min_length:int ->
-  ?max_length:int ->
-  ?allowed_values:string list ->
-  ?allowed_pattern:string ->
-  ?default_value:string ->
   unit ->
-  parameter
-
+  t * unit
 (**
     Add an output to the stack.
 
@@ -213,10 +217,8 @@ val add_string_parameter :
       can be deployed multiple times.
     - [description] is an optional description for the output
   *)
-val add_output :
-  t -> string -> string -> ?export:string -> ?description:string -> unit -> unit
 
+val serialise : t -> Yojson.Safe.t
 (**
     Serialise the template to Yojson structure for JSON serialisation
   *)
-val serialise : t -> Yojson.Safe.t

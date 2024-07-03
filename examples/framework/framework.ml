@@ -7,8 +7,6 @@ open Cfgen
 open Cfgen.BaseConstructs.AWS.Lambda
 open Cfgen.BaseConstructs.AWS.IAM
 
-let template = Template.make ()
-
 let assume_role_policy_document_for_service service =
   Helpers.Iam_policy.(
     yojson_of_policy
@@ -29,34 +27,10 @@ let lambda_cloudwatch_logs_policy =
              ~resource:[ "*" ] ();
          ]))
 
-let template, role =
-  Template.add_resource template "FunctionRole"
-    (module Role)
-    (Role.make_properties
-       ~assume_role_policy_document:
-         (assume_role_policy_document_for_service "lambda")
-       ~policies:
-         [
-           Role.make_policy ~policy_name:"cloudwatch"
-             ~policy_document:lambda_cloudwatch_logs_policy ();
-         ]
-       ())
-
 type buildTask =
   | DuneTarget of string
   | PackageZip of string
   | CopyToS3 of string
-
-(* module rec Construct : sig *)
-(*   module type T = sig *)
-(*     val parent : (module Construct.T) option *)
-(*     val name : string *)
-(*     val build : unit -> buildTask list *)
-(**)
-(*     val append_template : Template.t -> Template.t *)
-(*   end *)
-(* end = *)
-(*   Construct *)
 
 module type PackedResource = sig
   val type_ : string
@@ -78,14 +52,20 @@ let pack_resource (type a p)
   end in
   (module PackedResourceValue : PackedResource)
 
-type scope = { path : string list }
+module Id = struct
+  type t = { id : string }
 
-let root_scope = { path = [] }
-let append_scope scope id = { path = id :: scope.path }
+  let make id = { id }
+  let get { id } = id
+end
 
-type id = { id : string }
+module Scope = struct
+  type t = { path : string list }
 
-let make_id id = { id }
+  let root = { path = [] }
+  let append scope id = { path = id :: scope.path }
+  let path scope = scope.path
+end
 
 let make_logical_id scope id =
   Digestif.SHA1.(
@@ -96,9 +76,9 @@ let make_logical_id scope id =
         (fun a ctx ->
           let ctx = feed_string ctx a in
           feed_string ctx "/")
-        scope.path ctx
+        (Scope.path scope) ctx
     in
-    let ctx = feed_string ctx id in
+    let ctx = feed_string ctx (Id.get id) in
     get ctx |> to_hex)
 
 type synthesized =
@@ -106,8 +86,8 @@ type synthesized =
   | Construct of construct list
 
 and construct = {
-  scope : scope;
-  id : id;
+  scope : Scope.t;
+  id : Id.t;
   build : unit -> buildTask list;
   synthesize : unit -> synthesized;
 }
@@ -120,6 +100,11 @@ let make_cfn_resource scope id properties resource_type =
     synthesize =
       (fun () -> CfnResource (pack_resource resource_type properties));
   }
+
+module CfnRole = struct
+  let make scope id properties =
+    make_cfn_resource scope id properties (module Role)
+end
 
 let make_cfn_role scope id properties =
   make_cfn_resource scope id properties (module Role)
@@ -138,7 +123,7 @@ let make_simple_service_role scope id service_domain ~inline_policies =
       (fun () ->
         Construct
           [
-            make_cfn_role scope (make_id "Role")
+            make_cfn_role scope (Id.make "Role")
               (Role.make_properties
                  ~assume_role_policy_document:
                    (assume_role_policy_document_for_service service_domain)
@@ -146,7 +131,7 @@ let make_simple_service_role scope id service_domain ~inline_policies =
           ]);
   }
 
-let make_simple_function scope id path role =
+let make_simple_function scope id ~path ~role =
   let x =
     {
       scope;
@@ -156,7 +141,7 @@ let make_simple_function scope id path role =
         (fun () ->
           Construct
             [
-              make_cfn_function scope (make_id "Function")
+              make_cfn_function scope (Id.make "Function")
                 (Function.make_properties ~role:role.attributes.arn
                    ~code:(Function.make_code ~s3_bucket:"" ~s3_key:path ())
                    ());
@@ -165,20 +150,30 @@ let make_simple_function scope id path role =
   in
   x
 
-let template, _ =
-  Template.add_resource template "FunctionX"
-    (module Function)
-    Function.(
-      make_properties ~runtime:"nodejs18.x"
-        ~code:(Function.make_code ~s3_bucket:"bucket" ~s3_key:"my_key/key" ())
-        ~role:role.attributes.arn
-        ~tags:[ make_tag ~key:"Environment" ~value:"development" () ]
-        ())
+let make_stack id ~resources =
+  let stack =
+    {
+      scope = Scope.root;
+      id;
+      build = (fun () -> []);
+      synthesize = (fun () -> Construct resources);
+    }
+  in
+  stack
 
-let template, _ =
-  Template.add_string_parameter template "TestParameter"
-    ~description:"This is a test parameter" ~default_value:"Foobar" ()
+let synthesize_stack stack =
+  let rec gather_resources construct =
+    construct.synthesize () |> function
+    | Construct x -> x |> List.map gather_resources |> List.flatten
+    | CfnResource resource ->
+        let module Unpacked = (val resource : PackedResource) in
+        [
+          ( make_logical_id construct.scope construct.id,
+            Unpacked.type_,
+            Unpacked.yojson_of_properties () );
+        ]
+  in
+  let resources = gather_resources stack in
+  resources
 
-let serialised_template = Template.serialise template;;
-
-Fmt.pr "%s\n" (Yojson.Safe.pretty_to_string serialised_template)
+(* Fmt.pr "%s\n" (Yojson.Safe.pretty_to_string serialised_template) *)

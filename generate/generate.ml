@@ -48,11 +48,11 @@ let write_property_constructor o name (type_ : property_specification) =
 let write_resource_properties_specification o _ (type_ : resource_specification)
     =
   if List.length type_.properties > 0 then (
-    Fmt.pf o "@;(**@;see@;%s;*)@,@[<2>type properties = {@,"  type_.documentation;
+    Fmt.pf o "@;(**@;see@;%s;*)@,@[<2>type properties = {@," type_.documentation;
     type_.properties
     |> List.iter (fun (name, prop_type) ->
            write_property_definition o name prop_type);
-    Fmt.pf o "@]@,}@," )
+    Fmt.pf o "@]@,}@,")
   else Fmt.pf o "@,(** see %s *)@,type properties = unit@;" type_.documentation
 
 let write_resource_properties_constructor o _ (type_ : resource_specification) =
@@ -67,15 +67,16 @@ let write_resource_properties_constructor o _ (type_ : resource_specification) =
       type_.properties
       |> List.map (fun (name, _) -> name |> to_snake_case |> to_safe_name)
     in
-    Fmt.pf o "@,let make_properties@;@[<2>" ;
+    Fmt.pf o "@,let make_properties@;@[<2>";
     List.iter (fun arg -> Fmt.pf o "%s@;" arg) args;
     Fmt.pf o "@]()@ =@ {@[<2>@;";
     List.iter (fun record -> Fmt.pf o "%s;@;" record) record;
     Fmt.pf o "@]}@;@\n")
 
 exception InvalidAttributeTokenType of string
+
 let write_resource_constructor o fqn resource_name type_ =
-  Fmt.pf o "let create logical_id (properties: properties) =@;@[<2>@;" ;
+  Fmt.pf o "let create logical_id (properties: properties) =@;@[<2>@;";
   Fmt.pf o "let module Resource = struct@;@[<2>@\n";
   Fmt.pf o "type attributes = %s@\n" (resource_name |> to_attributes_type_name);
 
@@ -83,7 +84,7 @@ let write_resource_constructor o fqn resource_name type_ =
 
   Attributes.write_resource_attributes_generator o type_;
 
-  Fmt.pf o "let yojson_of_properties () = yojson_of_properties properties@;" ;
+  Fmt.pf o "let yojson_of_properties () = yojson_of_properties properties@;";
   Fmt.pf o "@]@;end@;in@;";
   Fmt.pf o
     "let resource@;\
@@ -98,7 +99,7 @@ let write_resource_constructor o fqn resource_name type_ =
 let write_resource_interface o fqn name (type_ : resource_specification)
     (property_types : property_specifications) =
   Fmt.pf o "@;(**@;see@;%s@;*)@;module %s = struct@;@[<2>@;" type_.documentation
-    name;
+    (to_safe_name name);
   let sorted_property_types = property_types |> sort_by_deps name in
   sorted_property_types
   |> List.iteri (fun i (name, prop_spec) ->
@@ -111,7 +112,7 @@ let write_resource_interface o fqn name (type_ : resource_specification)
   sorted_property_types
   |> List.iteri (fun i (name, (spec : property_specification)) ->
          write_record_to_yojson o (name |> to_type_name) spec.properties (i = 0));
-  write_record_to_yojson o "properties"  type_.properties true;
+  write_record_to_yojson o "properties" type_.properties true;
   write_resource_attributes_specification o name type_.attributes;
   Attributes.write_resource_attributes_generator o type_;
   Fmt.pf o "let cloudformation_type = \"%s\"@\n" fqn;

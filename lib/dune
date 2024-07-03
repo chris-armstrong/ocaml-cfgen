@@ -15,13 +15,16 @@
 
 (rule
  (alias resources)
- (targets Cf_aws.ml Cf_alexa.ml
+ (targets
+  Cf_aws.ml
+  Cf_alexa.ml
   ACMPCA.ml
+  ARCZonalShift.ml
   APS.ml
   AccessAnalyzer.ml
   AmazonMQ.ml
   Amplify.ml
-  AmplifyUIBuilder.ml; recursive types not handled in from_yojson_to converters
+  AmplifyUIBuilder.ml ; recursive types not handled in from_yojson_to converters
   ApiGateway.ml
   ApiGatewayV2.ml
   AppConfig.ml
@@ -37,7 +40,9 @@
   AuditManager.ml
   AutoScaling.ml
   AutoScalingPlans.ml
+  B2BI.ml
   Backup.ml
+  BackupGateway.ml
   Batch.ml
   BillingConductor.ml
   Budgets.ml
@@ -46,6 +51,7 @@
   Cassandra.ml
   CertificateManager.ml
   Chatbot.ml
+  CleanRooms.ml
   Cloud9.ml
   CloudFormation.ml
   CloudFront.ml
@@ -74,6 +80,7 @@
   DataBrew.ml
   DataPipeline.ml
   DataSync.ml
+  DataZone.ml
   Detective.ml
   DevOpsGuru.ml
   DirectoryService.ml
@@ -93,6 +100,7 @@
   ElasticLoadBalancing.ml
   ElasticLoadBalancingV2.ml
   Elasticsearch.ml
+  EntityResolution.ml
   EventSchemas.ml
   Events.ml
   Evidently.ml
@@ -111,6 +119,7 @@
   GroundStation.ml
   GuardDuty.ml
   HealthLake.ml
+  HealthImaging.ml
   IAM.ml
   IVS.ml
   IVSChat.ml
@@ -158,13 +167,16 @@
   MediaConvert.ml
   MediaLive.ml
   MediaPackage.ml
+  MediaPackageV2.ml
   MediaStore.ml
   MediaTailor.ml
   MemoryDB.ml
   Neptune.ml
+  NeptuneGraph.ml
   NetworkFirewall.ml
   NetworkManager.ml
   NimbleStudio.ml
+  OSIS.ml
   Oam.ml
   Omics.ml
   OpenSearchServerless.ml
@@ -172,11 +184,13 @@
   OpsWorks.ml
   OpsWorksCM.ml
   Organizations.ml
+  PCAConnectorAD.ml
   Panorama.ml
   Personalize.ml
   Pinpoint.ml
   PinpointEmail.ml
   Pipes.ml
+  Proton.ml
   QLDB.ml
   QuickSight.ml
   RAM.ml
@@ -196,6 +210,7 @@
   Route53RecoveryReadiness.ml
   Route53Resolver.ml
   S3.ml
+  S3Express.ml
   S3ObjectLambda.ml
   S3Outposts.ml
   SDB.ml
@@ -213,6 +228,7 @@
   ServiceCatalog.ml
   ServiceCatalogAppRegistry.ml
   ServiceDiscovery.ml
+  Shield.ml
   Signer.ml
   SimSpaceWeaver.ml
   StepFunctions.ml
@@ -221,6 +237,7 @@
   SystemsManagerSAP.ml
   Timestream.ml
   Transfer.ml
+  VerifiedPermissions.ml
   VoiceID.ml
   VpcLattice.ml
   WAF.ml
@@ -228,10 +245,11 @@
   WAFv2.ml ; recursive types not handled in from_yojson_to converters
   Wisdom.ml
   WorkSpaces.ml
+  WorkSpacesWeb.ml
+  WorkSpacesThinClient.ml
   XRay.ml
   ; Alexa
-  ASK.ml
- )
+  ASK.ml)
  (deps
   (sandbox always)
   (:jsonfiles
@@ -239,8 +257,9 @@
  (action
   (run ../write_specs/write_specs.exe %{jsonfiles})))
 
-(library (name cfgen)
-(public_name cfgen)
+(library
+ (name cfgen)
+ (public_name cfgen)
  (libraries fmt yojson str)
- (preprocess (pps ppx_expect))
- )
+ (preprocess
+  (pps ppx_expect)))

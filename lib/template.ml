@@ -37,16 +37,16 @@ type output = {
 }
 
 type t = {
-  parameters : parameter_input StringMap.t ref;
-  resources : (module StackResource) StringMap.t ref;
-  outputs : output StringMap.t ref;
+  parameters : parameter_input StringMap.t;
+  resources : (module StackResource) StringMap.t;
+  outputs : output StringMap.t;
 }
 
 let make () =
   {
-    resources = ref StringMap.empty;
-    parameters = ref StringMap.empty;
-    outputs = ref StringMap.empty;
+    resources = StringMap.empty;
+    parameters = StringMap.empty;
+    outputs = StringMap.empty;
   }
 
 type 'attributes logical_resource = {
@@ -63,9 +63,7 @@ module type ResourceType = sig
   val cloudformation_type : string
 end
 
-type parameter = {
-  ref_: string;
-}
+type parameter = { ref_ : string }
 
 let add_resource (type a p) stack logical_id
     (resource_type :
@@ -79,24 +77,32 @@ let add_resource (type a p) stack logical_id
     let type_ = ResourceType.cloudformation_type
     let yojson_of_properties () = ResourceType.yojson_of_properties properties
   end in
-  stack.resources :=
-    StringMap.add logical_id
-      (module Resource : StackResource)
-      !(stack.resources);
-  {
-    cloudformation_type = Resource.type_;
-    attributes = ResourceType.create_attributes logical_id;
-  }
+  let resources =
+    StringMap.add logical_id (module Resource : StackResource) stack.resources
+  in
+  let stack = { stack with resources } in
+  ( stack,
+    {
+      cloudformation_type = Resource.type_;
+      attributes = ResourceType.create_attributes logical_id;
+    } )
 
 let add_parameter stack name constraints ?description ?no_echo () =
   let parameter = { constraints; description; no_echo } in
-  stack.parameters := StringMap.add name parameter !(stack.parameters);
-  { ref_= Token_map.create_string_token ~token_type:"Parameter" (Attributes.ref_resolver name)}
+  let parameters = StringMap.add name parameter stack.parameters in
+  let stack = { stack with parameters } in
+  ( stack,
+    {
+      ref_ =
+        Token_map.create_string_token ~token_type:"Parameter"
+          (Attributes.ref_resolver name);
+    } )
 
 let add_output stack name value ?export ?description () =
   let output = { export; value; description } in
-  stack.outputs := StringMap.add name output !(stack.outputs);
-  ()
+  let outputs = StringMap.add name output stack.outputs in
+  let stack = { stack with outputs } in
+  (stack, ())
 
 let add_string_parameter stack name ?description ?no_echo ?min_length
     ?max_length ?allowed_values ?allowed_pattern ?default_value () =
@@ -105,11 +111,17 @@ let add_string_parameter stack name ?description ?no_echo ?min_length
       { min_length; max_length; allowed_pattern; allowed_values; default_value }
   in
   let parameter = { constraints; description; no_echo } in
-  stack.parameters := StringMap.add name parameter !(stack.parameters);
-  { ref_= Token_map.create_string_token ~token_type:"Parameter" (Attributes.ref_resolver name)}
+  let parameters = StringMap.add name parameter stack.parameters in
+  let stack = { stack with parameters } in
+  ( stack,
+    {
+      ref_ =
+        Token_map.create_string_token ~token_type:"Parameter"
+          (Attributes.ref_resolver name);
+    } )
 
-let yojson_of_stack_parameter
-    ({ constraints; no_echo; description } ) : Yojson.Safe.t =
+let yojson_of_stack_parameter { constraints; no_echo; description } :
+    Yojson.Safe.t =
   let open Util in
   let type_, pairs =
     match constraints with
@@ -187,8 +199,7 @@ let yojson_of_resources (resources : (module StackResource) StringMap.t) :
   let l =
     resources |> StringMap.to_seq
     |> Seq.fold_left
-         (fun l (name, resource) ->
-           (name, yojson_of_resource resource) :: l)
+         (fun l (name, resource) -> (name, yojson_of_resource resource) :: l)
          []
     |> List.rev
   in
@@ -218,7 +229,7 @@ let yojson_of_outputs outputs =
 let serialise stack : Yojson.Safe.t =
   `Assoc
     [
-      ("Parameters", yojson_of_parameters !(stack.parameters));
-      ("Resources", yojson_of_resources !(stack.resources));
-      ("Outputs", yojson_of_outputs !(stack.outputs));
+      ("Parameters", yojson_of_parameters stack.parameters);
+      ("Resources", yojson_of_resources stack.resources);
+      ("Outputs", yojson_of_outputs stack.outputs);
     ]
