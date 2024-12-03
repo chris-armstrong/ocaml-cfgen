@@ -22,8 +22,9 @@
    (>= "3.4"))
   (ocaml
    (>= "4.14"))
-  (yojson (>= "2.0.0"))
-   
+  (yojson
+   (>= "2.0.0"))
+  digestif
   containers
   (fmt
    (>= "0.9.0"))
